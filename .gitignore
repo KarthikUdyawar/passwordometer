@@ -156,4 +156,5 @@ cython_debug/
 
 # Custom
 backup/
-passwordevaluation/
+raw_dataset/
+kaggle.json
