@@ -19,7 +19,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Build package
-        run: python setup.py
+        run: pip install . -e
 
       - name: Run tests
         run: pytest src/test
