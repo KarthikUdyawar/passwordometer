@@ -1,8 +1,12 @@
+"""
+Custom logger configuration for logging to both a file and the console.
+"""
 import logging
 import os
 from datetime import datetime
 
 import colorlog
+
 
 LOG_FILE = f"{datetime.now().strftime('%d_%m_%Y')}.log"
 logs_folder = os.path.join(os.getcwd(), "logs")
@@ -23,8 +27,8 @@ stream_handler.setLevel(logging.DEBUG)
 
 # Create color formatter for console log messages
 console_formatter = colorlog.ColoredFormatter(
-    "[ %(asctime)s ] %(lineno)d %(name)s - \
-        %(log_color)s%(levelname)s%(reset)s - %(message)s",
+    "[ %(asctime)s ] %(lineno)d %(name)s - "
+    "%(log_color)s%(levelname)s%(reset)s - %(message)s",
     log_colors={
         "DEBUG": "white",
         "INFO": "blue",
