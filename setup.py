@@ -1,3 +1,6 @@
+"""
+Setup script for the Passwordometer package.
+"""
 from typing import List
 
 from setuptools import find_packages
@@ -16,8 +19,8 @@ def get_requirements(file_path: str) -> List[str]:
         List[str]: A list of requirements read from the file.
     """
     requirements = []
-    with open(file_path) as f:
-        requirements = f.readlines()
+    with open(file_path, encoding="utf-8") as file:
+        requirements = file.readlines()
         requirements = [req.replace("\n", "") for req in requirements]
 
         if HYPHEN_E_DOT in requirements:
@@ -36,8 +39,8 @@ def get_long_description(file_path: str = "README.md") -> str:
     Returns:
         str: The contents of the file as a string.
     """
-    with open(file_path, encoding="utf-8") as f:
-        long_description = f.read()
+    with open(file_path, encoding="utf-8") as file:
+        long_description = file.read()
     return long_description
 
 
