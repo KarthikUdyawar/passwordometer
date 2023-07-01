@@ -1,9 +1,14 @@
+"""
+Unit tests for the logging functionality.
+"""
 import pytest
-
 from src.middleware.logger import logger
 
 
 def test_logging() -> None:
+    """
+    Test logging at different levels.
+    """
     logger.debug("Debug message")
     logger.info("Info message")
     logger.warning("Warning message")
