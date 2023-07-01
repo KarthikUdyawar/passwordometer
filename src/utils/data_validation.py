@@ -1,11 +1,13 @@
+"""
+Module for password data validation.
+"""
 import sys
 
 from src.middleware.exception import CustomException
-from src.middleware.logger import logger
 
 
-def isValidPassword(text: str) -> int:
-    """The isValidPassword function checks whether
+def is_valid_password(text: str) -> int:
+    """The is_valid_password function checks whether
     a given password meets certain criteria and
     returns an integer value indicating its validity.
 
@@ -27,5 +29,5 @@ def isValidPassword(text: str) -> int:
         valid_set = set("qwertyuiopasdfghjklzxcvbnm1234567890!@#$%^&*")
 
         return 0 if text_set.difference(valid_set) else 1
-    except Exception as e:
-        raise CustomException(e, sys) from e
+    except Exception as error:
+        raise CustomException(error, sys) from error
