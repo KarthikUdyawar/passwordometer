@@ -158,5 +158,6 @@ cython_debug/
 backup/
 raw_dataset/
 artifacts/
+notebooks/
 
 kaggle.json
