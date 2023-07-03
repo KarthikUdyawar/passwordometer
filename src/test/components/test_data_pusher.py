@@ -25,7 +25,7 @@ class MockMongoDBConfig(MongoDBConfig):
 class MockFilePathConfig(FilePathConfig):
     """Mock configuration class for file paths."""
 
-    raw_data_path: str = os.path.join("raw_dataset", "sample.txt")
+    raw_data_path: str = os.path.join("src/test/data", "sample.txt")
 
 
 @pytest.fixture(scope="session", name="data_pusher")  # type: ignore
