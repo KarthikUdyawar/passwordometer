@@ -38,7 +38,7 @@ repos:
     hooks:
       - id: mypy
         files: ^src/
-        args: [--strict, --ignore-missing-imports, --disallow-untyped-decorators]
+        args: [--strict, --ignore-missing-imports, --no-implicit-reexport]
 
   - repo: https://github.com/PyCQA/pylint
     rev: v2.17.4
