@@ -6,9 +6,9 @@ from dataclasses import dataclass
 
 import pandas as pd
 import pytest
+
 from src.components.data_pusher import DataPusher
-from src.interface.config import FilePathConfig
-from src.interface.config import MongoDBConfig
+from src.interface.config import FilePathConfig, MongoDBConfig
 
 
 # Mock the necessary dependencies

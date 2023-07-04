@@ -1,6 +1,13 @@
+"""
+This module handles the data ingestion process by fetching data from
+MongoDB, performing train-test split, and saving the split data
+as CSV files.
+"""
 import os
 import sys
+from typing import Any
 
+import pandas as pd
 from sklearn.model_selection import train_test_split
 
 from src.components.data_pusher import DataPusher
@@ -10,15 +17,43 @@ from src.middleware.logger import logger
 
 
 class DataIngestion:
-    def __init__(self):
+    """
+    This class handles the data ingestion process.
+
+    Methods:
+        __init__(): Initializes the DataIngestion class.
+        initiate_data_ingestion(): Initiates the data ingestion process.
+        data_report(): Generates a report on the ingested data.
+        _display_report(): Displays a report.
+
+    Attributes:
+        filepath_config (FilePathConfig): An instance of FilePathConfig
+        class for managing file paths.
+    """
+
+    def __init__(self) -> None:
+        """
+        Initializes the DataIngestion class.
+        """
         self.filepath_config = FilePathConfig()
 
-    def initiate_data_ingestion(self):
+    def initiate_data_ingestion(self) -> tuple[str, str]:
+        """
+        Initiates the data ingestion process.
+
+        Raises:
+            CustomException: Raised when an error occurs
+            during data ingestion.
+
+        Returns:
+            tuple[str, str]: A tuple containing the file paths of
+            the train and test data.
+        """
         try:
             logger.info("Started data ingestion method")
 
             logger.info("Fetching data from MongoDB")
-            df = DataPusher().get_data_from_mongodb()
+            dataframe = DataPusher().get_data_from_mongodb()
             os.makedirs(
                 os.path.dirname(self.filepath_config.raw_data_path),
                 exist_ok=True,
@@ -27,7 +62,7 @@ class DataIngestion:
 
             logger.info("Train test split initiated")
             train_set, test_set = train_test_split(
-                df, test_size=0.2, random_state=42
+                dataframe, test_size=0.2, random_state=42
             )
             logger.info("Done Train test split")
 
@@ -45,10 +80,58 @@ class DataIngestion:
                 self.filepath_config.train_data_path,
                 self.filepath_config.test_data_path,
             )
-        except Exception as e:
-            raise CustomException(e, sys) from e
+        except Exception as error:
+            raise CustomException(error, sys) from error
+
+    def data_report(self) -> None:
+        """
+        Generates a report on the ingested data.
+        """
+        try:
+            logger.info("Generating data report")
+
+            train_df = pd.read_csv(self.filepath_config.train_data_path)
+            test_df = pd.read_csv(self.filepath_config.test_data_path)
+
+            self._display_report("Train dataset:", train_df.head())
+            self._display_report("Test dataset:", test_df.head())
+
+            self._display_report(
+                "Train dataset statistics:", train_df.describe()
+            )
+            self._display_report(
+                "Test dataset statistics:", test_df.describe()
+            )
+
+            self._display_report("Train dataset info:", train_df.info())
+            self._display_report("Test dataset info:", test_df.info())
+
+            self._display_report(
+                "Train dataset strength destitution:",
+                train_df["strength"].value_counts(bins=5),
+            )
+            self._display_report(
+                "Test dataset strength destitution:",
+                test_df["strength"].value_counts(bins=5),
+            )
+
+        except Exception as error:
+            raise CustomException(error, sys) from error
+
+    def _display_report(self, arg0: str, arg1: Any) -> None:
+        """
+        Displays a report.
+
+        Args:
+            arg0 (str): A description of the report.
+            arg1 (Any): The content of the report.
+        """
+        logger.info(arg0)
+        logger.info(arg1)
+        logger.info("Done %s", arg0)
 
 
 if __name__ == "__main__":
     obj = DataIngestion()
-    obj.initiate_data_ingestion()
+    # obj.initiate_data_ingestion()
+    obj.data_report()

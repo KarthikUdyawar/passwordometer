@@ -2,6 +2,7 @@
 Unit tests for the logging functionality.
 """
 import pytest
+
 from src.middleware.logger import logger
 
 
