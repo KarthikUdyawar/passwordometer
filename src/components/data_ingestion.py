@@ -53,11 +53,12 @@ class DataIngestion:
             logger.info("Started data ingestion method")
 
             logger.info("Fetching data from MongoDB")
-            dataframe = DataPusher().get_data_from_mongodb()
+            dataframe: pd.DataFrame = DataPusher().get_data_from_mongodb()
             os.makedirs(
                 os.path.dirname(self.filepath_config.train_data_path),
                 exist_ok=True,
             )
+            logger.debug("Shape of dataframe: %s", dataframe.shape)
             logger.info("Done fetching data from MongoDB")
 
             logger.info("Train test split initiated")
