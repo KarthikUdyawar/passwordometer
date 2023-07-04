@@ -17,7 +17,8 @@ def data_ingestion_fixture() -> DataIngestion:
     Returns:
         DataIngestion: An instance of the DataIngestion class.
     """
-    return DataIngestion()
+    data_ingestion = DataIngestion()
+    return data_ingestion
 
 
 def test_initiate_data_ingestion(data_ingestion: DataIngestion) -> None:
