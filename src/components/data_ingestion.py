@@ -55,7 +55,7 @@ class DataIngestion:
             logger.info("Fetching data from MongoDB")
             dataframe = DataPusher().get_data_from_mongodb()
             os.makedirs(
-                os.path.dirname(self.filepath_config.raw_data_path),
+                os.path.dirname(self.filepath_config.train_data_path),
                 exist_ok=True,
             )
             logger.info("Done fetching data from MongoDB")
@@ -133,5 +133,5 @@ class DataIngestion:
 
 if __name__ == "__main__":
     obj = DataIngestion()
-    # obj.initiate_data_ingestion()
+    obj.initiate_data_ingestion()
     obj.data_report()
