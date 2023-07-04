@@ -4,8 +4,8 @@ Unit tests for the CustomException and error_message_detail functions.
 import sys
 
 import pytest
-from src.middleware.exception import CustomException
-from src.middleware.exception import error_message_detail
+
+from src.middleware.exception import CustomException, error_message_detail
 from src.middleware.logger import logger
 
 

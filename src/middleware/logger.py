@@ -7,7 +7,6 @@ from datetime import datetime
 
 import colorlog
 
-
 LOG_FILE = f"{datetime.now().strftime('%d_%m_%Y')}.log"
 logs_folder = os.path.join(os.getcwd(), "logs")
 os.makedirs(logs_folder, exist_ok=True)

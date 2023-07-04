@@ -5,8 +5,8 @@ import sys
 
 import pandas as pd
 from pymongo import MongoClient
-from src.interface.config import FilePathConfig
-from src.interface.config import MongoDBConfig
+
+from src.interface.config import FilePathConfig, MongoDBConfig
 from src.middleware.exception import CustomException
 from src.middleware.logger import logger
 from src.utils.data_validation import is_valid_password
