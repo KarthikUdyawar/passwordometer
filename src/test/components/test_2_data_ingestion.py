@@ -9,7 +9,7 @@ import pytest
 from src.components.data_ingestion import DataIngestion
 
 
-@pytest.fixture(name="data_ingestion")  # type: ignore
+@pytest.fixture(scope="session", name="data_ingestion")  # type: ignore
 def data_ingestion_fixture() -> DataIngestion:
     """
     Fixture to create a DataIngestion object before each test.
