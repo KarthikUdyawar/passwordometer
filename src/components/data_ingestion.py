@@ -37,7 +37,7 @@ class DataIngestion:
         """
         self.filepath_config = FilePathConfig()
 
-    def initiate_data_ingestion(self) -> tuple[str, str]:
+    def initiate_data_ingestion(self) -> Any:
         """
         Initiates the data ingestion process.
 
@@ -80,6 +80,7 @@ class DataIngestion:
                 self.filepath_config.train_data_path,
                 self.filepath_config.test_data_path,
             )
+
         except Exception as error:
             raise CustomException(error, sys) from error
 
