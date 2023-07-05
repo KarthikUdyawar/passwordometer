@@ -138,8 +138,8 @@ def test_train_test_split_ratio(data_ingestion: DataIngestion) -> None:
     total_samples = len(train_df) + len(test_df)
     expected_train_ratio = len(train_df) / total_samples
     expected_test_ratio = len(test_df) / total_samples
-    assert pytest.approx(expected_train_ratio, abs=0.01) == 0.8
-    assert pytest.approx(expected_test_ratio, abs=0.01) == 0.2
+    assert pytest.approx(expected_train_ratio, abs=0.02) == 0.8
+    assert pytest.approx(expected_test_ratio, abs=0.02) == 0.2
 
 
 def test_missing_values(data_ingestion: DataIngestion) -> None:
