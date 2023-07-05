@@ -84,7 +84,7 @@ def test_push_to_mongodb(data_pusher: DataPusher) -> None:
 
 
 @pytest.fixture(scope="session", name="data_ingestion")  # type: ignore
-def data_ingestion_fixture() -> DataIngestion:
+def data_ingestion_fixture(data_pusher: DataPusher) -> DataIngestion:
     """
     Fixture to create a DataIngestion object before each test.
 
@@ -92,7 +92,7 @@ def data_ingestion_fixture() -> DataIngestion:
         DataIngestion: An instance of the DataIngestion class.
     """
     data_ingestion = DataIngestion()
-    data_ingestion.dataframe = DataPusher().get_data_from_mongodb()
+    data_ingestion.dataframe = data_pusher.get_data_from_mongodb()
     return data_ingestion
 
 
