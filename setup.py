@@ -3,8 +3,7 @@ Setup script for the Passwordometer package.
 """
 from typing import List
 
-from setuptools import find_packages
-from setuptools import setup
+from setuptools import find_packages, setup
 
 HYPHEN_E_DOT = "-e ."
 

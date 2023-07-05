@@ -15,23 +15,23 @@ repos:
       - id: debug-statements
         language_version: python3
 
-  - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
     hooks:
-      - id: flake8
-        language_version: python3
-
-  - repo: https://github.com/asottile/reorder_python_imports
-    rev: v3.10.0
-    hooks:
-      - id: reorder-python-imports
-        args: [--application-directories=.src, --py36-plus]
+      - id: isort
+        args: [--profile=black]
 
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.7.0
     hooks:
       - id: pyupgrade
         args: [--py36-plus]
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        language_version: python3
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.910
@@ -51,4 +51,5 @@ repos:
           - pandas
           - pymongo
           - password_strength
+          - scikit-learn
         args: []
