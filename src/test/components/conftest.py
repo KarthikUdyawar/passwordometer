@@ -1,13 +1,22 @@
-# import os
-# from dataclasses import dataclass
+"""
+Module: test_fixtures
 
-# import pandas as pd
+This module contains test fixtures for the unit tests of the data ingestion
+and data pusher components.
+
+Fixtures:
+- data_pusher_fixture: Fixture for creating a DataPusher instance with
+mock configurations.
+- data_ingestion_fixture: Fixture to create a DataIngestion object
+before each test.
+
+"""
 import pytest
 
 from src.components.data_ingestion import DataIngestion
 from src.components.data_pusher import DataPusher
-from src.test.components.config import MockMongoDBConfig, MockFilePathConfig
-# from src.interface.config import FilePathConfig, MongoDBConfig
+from src.test.components.config import MockFilePathConfig, MockMongoDBConfig
+
 
 @pytest.fixture(scope="session", name="data_pusher")  # type: ignore
 def data_pusher_fixture() -> DataPusher:
@@ -21,6 +30,7 @@ def data_pusher_fixture() -> DataPusher:
     data_pusher.filepath_config = MockFilePathConfig()
 
     return data_pusher
+
 
 @pytest.fixture(scope="session", name="data_ingestion")  # type: ignore
 def data_ingestion_fixture(data_pusher: DataPusher) -> DataIngestion:

@@ -1,12 +1,19 @@
+"""
+Module: config
+
+This module contains mock configuration classes for file paths
+and MongoDB settings, used for testing purposes.
+
+Classes:
+- MockMongoDBConfig: Mock configuration class for MongoDB.
+- MockFilePathConfig: Mock configuration class for file paths.
+
+"""
 import os
 from dataclasses import dataclass
 
-# import pandas as pd
-# import pytest
-
-# from src.components.data_ingestion import DataIngestion
-# from src.components.data_pusher import DataPusher
 from src.interface.config import FilePathConfig, MongoDBConfig
+
 
 # Mock the necessary dependencies
 @dataclass

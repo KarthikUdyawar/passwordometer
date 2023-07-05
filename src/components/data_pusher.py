@@ -19,6 +19,9 @@ class DataPusher:
     """
 
     def __init__(self) -> None:
+        """
+        Initializes the DataPusher class.
+        """
         self.mongodb_config = MongoDBConfig()
         self.filepath_config = FilePathConfig()
 

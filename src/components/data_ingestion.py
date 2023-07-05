@@ -48,23 +48,17 @@ class DataIngestion:
             during data ingestion.
 
         Returns:
-            tuple[str, str]: A tuple containing the file paths of
+            Any: A tuple containing the file paths of
             the train and test data.
         """
         try:
             logger.info("Started data ingestion method")
 
-            logger.info("Fetching data from MongoDB")
-            # data_pusher = DataPusher()
-            # dataframe: pd.DataFrame = self.data_pusher.get_data_from_mongodb()
+            logger.info("Train test split initiated")
             os.makedirs(
                 os.path.dirname(self.filepath_config.train_data_path),
                 exist_ok=True,
             )
-            logger.debug("Shape of dataframe: %s", self.dataframe.shape)
-            logger.info("Done fetching data from MongoDB")
-
-            logger.info("Train test split initiated")
             train_set, test_set = train_test_split(
                 self.dataframe, test_size=0.2, random_state=42
             )
@@ -78,6 +72,7 @@ class DataIngestion:
                 self.filepath_config.test_data_path, index=False, header=True
             )
             logger.info("Finish saving Train test split")
+
             logger.info("Data ingestion completed")
 
             return (
