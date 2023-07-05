@@ -77,6 +77,7 @@ def test_push_to_mongodb(data_pusher: DataPusher) -> None:
     )
     data_pusher.push_to_mongodb(data_frame)
 
+#! -----------------------------------------
 
 @pytest.fixture(scope="session", name="data_ingestion")  # type: ignore
 def data_ingestion_fixture() -> DataIngestion:
@@ -89,36 +90,39 @@ def data_ingestion_fixture() -> DataIngestion:
     return DataIngestion()
 
 
-def test_initiate_data_ingestion(data_ingestion: DataIngestion) -> None:
+def test_initiate_data_ingestion(data_pusher: DataPusher, data_ingestion: DataIngestion) -> None:
     """
     Test the initiate_data_ingestion method of DataIngestion.
 
     Args:
         data_ingestion (DataIngestion): An instance of the DataIngestion class.
     """
+    data_pusher.initiate_data_push()
     train_path, test_path = data_ingestion.initiate_data_ingestion()
     assert os.path.exists(train_path)
     assert os.path.exists(test_path)
 
 
-def test_data_report(data_ingestion: DataIngestion) -> None:
+def test_data_report(data_pusher: DataPusher, data_ingestion: DataIngestion) -> None:
     """
     Test the data_report method of DataIngestion.
 
     Args:
         data_ingestion (DataIngestion): An instance of the DataIngestion class.
     """
+    data_pusher.initiate_data_push()
     data_ingestion.initiate_data_ingestion()
     data_ingestion.data_report()
 
 
-def test_train_test_split_ratio(data_ingestion: DataIngestion) -> None:
+def test_train_test_split_ratio(data_pusher: DataPusher, data_ingestion: DataIngestion) -> None:
     """
     Test the train-test split ratio.
 
     Args:
         data_ingestion (DataIngestion): An instance of the DataIngestion class.
     """
+    data_pusher.initiate_data_push()
     data_ingestion.initiate_data_ingestion()
     train_df = pd.read_csv(data_ingestion.filepath_config.train_data_path)
     test_df = pd.read_csv(data_ingestion.filepath_config.test_data_path)
@@ -129,13 +133,14 @@ def test_train_test_split_ratio(data_ingestion: DataIngestion) -> None:
     assert pytest.approx(expected_test_ratio, abs=0.01) == 0.2
 
 
-def test_missing_values(data_ingestion: DataIngestion) -> None:
+def test_missing_values(data_pusher: DataPusher, data_ingestion: DataIngestion) -> None:
     """
     Test for the absence of missing values in the train and test data.
 
     Args:
         data_ingestion (DataIngestion): An instance of the DataIngestion class.
     """
+    data_pusher.initiate_data_push()
     data_ingestion.initiate_data_ingestion()
     train_df = pd.read_csv(data_ingestion.filepath_config.train_data_path)
     test_df = pd.read_csv(data_ingestion.filepath_config.test_data_path)
