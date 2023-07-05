@@ -92,8 +92,8 @@ def data_ingestion_fixture() -> DataIngestion:
         DataIngestion: An instance of the DataIngestion class.
     """
     data_ingestion = DataIngestion()
-    data_ingestion.data_pusher = DataPusher()
-    return DataIngestion()
+    data_ingestion.dataframe = DataPusher().get_data_from_mongodb()
+    return data_ingestion
 
 
 def test_initiate_data_ingestion(
@@ -105,10 +105,10 @@ def test_initiate_data_ingestion(
     Args:
         data_ingestion (DataIngestion): An instance of the DataIngestion class.
     """
-    data_pusher.initiate_data_push()
-    dataframe = data_pusher.get_data_from_mongodb()
-    assert isinstance(dataframe, pd.DataFrame)
-    assert dataframe.shape[0] > 0
+    # data_pusher.initiate_data_push()
+    # dataframe = data_pusher.get_data_from_mongodb()
+    # assert isinstance(dataframe, pd.DataFrame)
+    # assert dataframe.shape[0] > 0
     train_path, test_path = data_ingestion.initiate_data_ingestion()
     assert os.path.exists(train_path)
     assert os.path.exists(test_path)

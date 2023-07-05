@@ -37,6 +37,7 @@ class DataIngestion:
         """
         self.filepath_config = FilePathConfig()
         self.data_pusher = DataPusher()
+        self.dataframe: pd.DataFrame = self.data_pusher.get_data_from_mongodb()
 
     def initiate_data_ingestion(self) -> Any:
         """
@@ -55,17 +56,17 @@ class DataIngestion:
 
             logger.info("Fetching data from MongoDB")
             # data_pusher = DataPusher()
-            dataframe: pd.DataFrame = self.data_pusher.get_data_from_mongodb()
+            # dataframe: pd.DataFrame = self.data_pusher.get_data_from_mongodb()
             os.makedirs(
                 os.path.dirname(self.filepath_config.train_data_path),
                 exist_ok=True,
             )
-            logger.debug("Shape of dataframe: %s", dataframe.shape)
+            logger.debug("Shape of dataframe: %s", self.dataframe.shape)
             logger.info("Done fetching data from MongoDB")
 
             logger.info("Train test split initiated")
             train_set, test_set = train_test_split(
-                dataframe, test_size=0.2, random_state=42
+                self.dataframe, test_size=0.2, random_state=42
             )
             logger.info("Done Train test split")
 
