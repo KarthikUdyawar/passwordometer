@@ -53,7 +53,8 @@ class DataIngestion:
             logger.info("Started data ingestion method")
 
             logger.info("Fetching data from MongoDB")
-            dataframe: pd.DataFrame = DataPusher().get_data_from_mongodb()
+            data_pusher = DataPusher()
+            dataframe: pd.DataFrame = data_pusher.get_data_from_mongodb()
             os.makedirs(
                 os.path.dirname(self.filepath_config.train_data_path),
                 exist_ok=True,
