@@ -28,6 +28,7 @@ class MockFilePathConfig(FilePathConfig):
     """Mock configuration class for file paths."""
 
     raw_data_path: str = os.path.join("src/test/data", "sample.txt")
+    train_data_path: str = os.path.join("src/test/data", "train.csv")
 
 
 @pytest.fixture(scope="session", name="data_pusher")  # type: ignore
@@ -88,6 +89,8 @@ def data_ingestion_fixture() -> DataIngestion:
     Returns:
         DataIngestion: An instance of the DataIngestion class.
     """
+    data_ingestion = DataIngestion()
+    data_ingestion.filepath_config = MockFilePathConfig()
     return DataIngestion()
 
 
@@ -100,12 +103,11 @@ def test_initiate_data_ingestion(data_pusher: DataPusher, data_ingestion: DataIn
     """
     data_pusher.initiate_data_push()
     dataframe = data_pusher.get_data_from_mongodb()
-    logger.debug("Shape of dataframe: %s", dataframe.shape)
     assert isinstance(dataframe, pd.DataFrame)
     assert dataframe.shape[0] > 0
-    # train_path, test_path = data_ingestion.initiate_data_ingestion()
-    # assert os.path.exists(train_path)
-    # assert os.path.exists(test_path)
+    train_path, test_path = data_ingestion.initiate_data_ingestion()
+    assert os.path.exists(train_path)
+    assert os.path.exists(test_path)
 
 
 # def test_data_report(data_pusher: DataPusher, data_ingestion: DataIngestion) -> None:
