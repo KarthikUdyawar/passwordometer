@@ -79,7 +79,9 @@ def test_push_to_mongodb(data_pusher: DataPusher) -> None:
     )
     data_pusher.push_to_mongodb(data_frame)
 
+
 #! -----------------------------------------
+
 
 @pytest.fixture(scope="session", name="data_ingestion")  # type: ignore
 def data_ingestion_fixture() -> DataIngestion:
@@ -90,11 +92,13 @@ def data_ingestion_fixture() -> DataIngestion:
         DataIngestion: An instance of the DataIngestion class.
     """
     data_ingestion = DataIngestion()
-    data_ingestion.filepath_config = MockFilePathConfig()
+    data_ingestion.data_pusher = DataPusher()
     return DataIngestion()
 
 
-def test_initiate_data_ingestion(data_pusher: DataPusher, data_ingestion: DataIngestion) -> None:
+def test_initiate_data_ingestion(
+    data_pusher: DataPusher, data_ingestion: DataIngestion
+) -> None:
     """
     Test the initiate_data_ingestion method of DataIngestion.
 

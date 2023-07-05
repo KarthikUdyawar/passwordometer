@@ -36,6 +36,7 @@ class DataIngestion:
         Initializes the DataIngestion class.
         """
         self.filepath_config = FilePathConfig()
+        self.data_pusher = DataPusher()
 
     def initiate_data_ingestion(self) -> Any:
         """
@@ -53,8 +54,8 @@ class DataIngestion:
             logger.info("Started data ingestion method")
 
             logger.info("Fetching data from MongoDB")
-            data_pusher = DataPusher()
-            dataframe: pd.DataFrame = data_pusher.get_data_from_mongodb()
+            # data_pusher = DataPusher()
+            dataframe: pd.DataFrame = self.data_pusher.get_data_from_mongodb()
             os.makedirs(
                 os.path.dirname(self.filepath_config.train_data_path),
                 exist_ok=True,
