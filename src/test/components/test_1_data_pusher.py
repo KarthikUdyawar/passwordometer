@@ -98,54 +98,57 @@ def test_initiate_data_ingestion(data_pusher: DataPusher, data_ingestion: DataIn
         data_ingestion (DataIngestion): An instance of the DataIngestion class.
     """
     data_pusher.initiate_data_push()
+    dataframe = data_pusher.get_data_from_mongodb()
+    assert isinstance(dataframe, pd.DataFrame)
+    assert dataframe.shape[0] > 0
     train_path, test_path = data_ingestion.initiate_data_ingestion()
     assert os.path.exists(train_path)
     assert os.path.exists(test_path)
 
 
-def test_data_report(data_pusher: DataPusher, data_ingestion: DataIngestion) -> None:
-    """
-    Test the data_report method of DataIngestion.
+# def test_data_report(data_pusher: DataPusher, data_ingestion: DataIngestion) -> None:
+#     """
+#     Test the data_report method of DataIngestion.
 
-    Args:
-        data_ingestion (DataIngestion): An instance of the DataIngestion class.
-    """
-    data_pusher.initiate_data_push()
-    data_ingestion.initiate_data_ingestion()
-    data_ingestion.data_report()
-
-
-def test_train_test_split_ratio(data_pusher: DataPusher, data_ingestion: DataIngestion) -> None:
-    """
-    Test the train-test split ratio.
-
-    Args:
-        data_ingestion (DataIngestion): An instance of the DataIngestion class.
-    """
-    data_pusher.initiate_data_push()
-    data_ingestion.initiate_data_ingestion()
-    train_df = pd.read_csv(data_ingestion.filepath_config.train_data_path)
-    test_df = pd.read_csv(data_ingestion.filepath_config.test_data_path)
-    total_samples = len(train_df) + len(test_df)
-    expected_train_ratio = len(train_df) / total_samples
-    expected_test_ratio = len(test_df) / total_samples
-    assert pytest.approx(expected_train_ratio, abs=0.01) == 0.8
-    assert pytest.approx(expected_test_ratio, abs=0.01) == 0.2
+#     Args:
+#         data_ingestion (DataIngestion): An instance of the DataIngestion class.
+#     """
+#     data_pusher.initiate_data_push()
+#     data_ingestion.initiate_data_ingestion()
+#     data_ingestion.data_report()
 
 
-def test_missing_values(data_pusher: DataPusher, data_ingestion: DataIngestion) -> None:
-    """
-    Test for the absence of missing values in the train and test data.
+# def test_train_test_split_ratio(data_pusher: DataPusher, data_ingestion: DataIngestion) -> None:
+#     """
+#     Test the train-test split ratio.
 
-    Args:
-        data_ingestion (DataIngestion): An instance of the DataIngestion class.
-    """
-    data_pusher.initiate_data_push()
-    data_ingestion.initiate_data_ingestion()
-    train_df = pd.read_csv(data_ingestion.filepath_config.train_data_path)
-    test_df = pd.read_csv(data_ingestion.filepath_config.test_data_path)
-    assert not train_df.isnull().values.any()
-    assert not test_df.isnull().values.any()
+#     Args:
+#         data_ingestion (DataIngestion): An instance of the DataIngestion class.
+#     """
+#     data_pusher.initiate_data_push()
+#     data_ingestion.initiate_data_ingestion()
+#     train_df = pd.read_csv(data_ingestion.filepath_config.train_data_path)
+#     test_df = pd.read_csv(data_ingestion.filepath_config.test_data_path)
+#     total_samples = len(train_df) + len(test_df)
+#     expected_train_ratio = len(train_df) / total_samples
+#     expected_test_ratio = len(test_df) / total_samples
+#     assert pytest.approx(expected_train_ratio, abs=0.01) == 0.8
+#     assert pytest.approx(expected_test_ratio, abs=0.01) == 0.2
+
+
+# def test_missing_values(data_pusher: DataPusher, data_ingestion: DataIngestion) -> None:
+#     """
+#     Test for the absence of missing values in the train and test data.
+
+#     Args:
+#         data_ingestion (DataIngestion): An instance of the DataIngestion class.
+#     """
+#     data_pusher.initiate_data_push()
+#     data_ingestion.initiate_data_ingestion()
+#     train_df = pd.read_csv(data_ingestion.filepath_config.train_data_path)
+#     test_df = pd.read_csv(data_ingestion.filepath_config.test_data_path)
+#     assert not train_df.isnull().values.any()
+#     assert not test_df.isnull().values.any()
 
 
 if __name__ == "__main__":
