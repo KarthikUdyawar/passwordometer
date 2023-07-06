@@ -1,4 +1,7 @@
+"""This module provides a class for data transformation and preprocessing."""
+
 import sys
+from typing import Any, List
 
 import numpy as np
 import pandas as pd
@@ -7,24 +10,47 @@ from sklearn.compose import ColumnTransformer
 from src.interface.config import FilePathConfig
 from src.middleware.exception import CustomException
 from src.middleware.logger import logger
-from src.utils.feature_extraction import (AlphaLCTransform, AlphaUCTransform,
-                                          ConsecAlphaLCTransform,
-                                          ConsecAlphaUCTransform,
-                                          ConsecNumberTransform,
-                                          ConsecSymbolTransform, LenTransform,
-                                          MidCharTransform, NumberTransform,
-                                          RepCharTransform, SeqAlphaTransform,
-                                          SeqKeyboardTransform,
-                                          SeqNumberTransform, SymbolTransform,
-                                          UniqueCharTransform)
+from src.utils.feature_extraction import (
+    AlphaLCTransform,
+    AlphaUCTransform,
+    ConsecAlphaLCTransform,
+    ConsecAlphaUCTransform,
+    ConsecNumberTransform,
+    ConsecSymbolTransform,
+    LenTransform,
+    MidCharTransform,
+    NumberTransform,
+    RepCharTransform,
+    SeqAlphaTransform,
+    SeqKeyboardTransform,
+    SeqNumberTransform,
+    SymbolTransform,
+    UniqueCharTransform,
+)
 from src.utils.file_manager import save_object
 
 
 class DataTransformation:
-    def __init__(self):
+    """A class for data transformation and preprocessing."""
+
+    def __init__(self) -> None:
+        """Initialize the DataTransformation object."""
         self.filepath_config = FilePathConfig()
 
-    def get_data_transformer_object(self, features):
+    def get_data_transformer_object(
+        self, features: List[str]
+    ) -> ColumnTransformer:
+        """Get a ColumnTransformer object for data transformation.
+
+        Args:
+            features (List[str]): List of feature names.
+
+        Raises:
+            CustomException: If there is an error during the transformation.
+
+        Returns:
+            ColumnTransformer: The ColumnTransformer object for data transformation.
+        """
         try:
             logger.info("Initialize preprocess")
 
@@ -49,14 +75,29 @@ class DataTransformation:
             )
             logger.info("Complete preprocess")
             return preprocessor
-        except Exception as e:
-            raise CustomException(e, sys) from e
+        except Exception as error:
+            raise CustomException(error, sys) from error
 
-    def initiate_data_transformation(self, train_path, test_path, features, target):
+    def initiate_data_transformation(
+        self, features: List[str], target: str
+    ) -> tuple[Any, Any, str]:
+        """Initiate the data transformation process.
+
+        Args:
+            features (List[str]): List of feature names.
+            target (str): The target variable name.
+
+        Raises:
+            CustomException: If there is an error during the data transformation.
+
+        Returns:
+            tuple[Any, Any, str]: A tuple containing the transformed training
+            and testing data arrays, the path to the saved preprocessing object.
+        """
         try:
             logger.info("Fetching train and test data")
-            train_df = pd.read_csv(train_path)
-            test_df = pd.read_csv(test_path)
+            train_df = pd.read_csv(self.filepath_config.train_data_path)
+            test_df = pd.read_csv(self.filepath_config.test_data_path)
 
             logger.info("Read train and test data completed")
 
@@ -92,5 +133,10 @@ class DataTransformation:
                 test_arr,
                 self.filepath_config.preprocessor_path,
             )
-        except Exception as e:
-            raise CustomException(e, sys) from e
+        except Exception as error:
+            raise CustomException(error, sys) from error
+
+
+if __name__ == "__main__":
+    t = DataTransformation()
+    t.initiate_data_transformation(["password"], "strength")
