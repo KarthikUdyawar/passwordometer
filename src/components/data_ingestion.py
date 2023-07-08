@@ -38,13 +38,6 @@ class DataIngestion:
         self.filepath_config = FilePathConfig()
         self.data_pusher = DataPusher()
         self.dataframe: pd.DataFrame = self.data_pusher.get_data_from_mongodb()
-        # self.dataframe: pd.DataFrame = pd.read_csv(
-        #         "src/test/data/sample.txt",
-        #         header=None,
-        #         names=["password"],
-        #         sep="\t",
-        #         encoding="ISO-8859-1",
-        #     )
 
     def initiate_data_ingestion(self) -> Any:
         """
@@ -140,7 +133,7 @@ class DataIngestion:
 
 if __name__ == "__main__":
     obj = DataIngestion()
-    # obj.dataframe = 
+    # obj.dataframe =
     obj.filepath_config.train_data_path = "src/test/data/train.csv"
     obj.filepath_config.test_data_path = "src/test/data/test.csv"
     obj.initiate_data_ingestion()

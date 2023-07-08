@@ -1,5 +1,3 @@
-# Can u add test using pytest
-
 """This module provides a class for data transformation and preprocessing."""
 
 import sys
@@ -138,8 +136,10 @@ class DataTransformation:
 
 
 if __name__ == "__main__":
-    features = ["password"]
-    target = "strength"
     data_transformation = DataTransformation()
-    transformer = data_transformation.get_data_transformer_object(features)
-    data_transformation.initiate_data_transformation(target, transformer)
+    transformer_obj = data_transformation.get_data_transformer_object(
+        features=["password"]
+    )
+    data_transformation.initiate_data_transformation(
+        target="strength", transformer=transformer_obj
+    )
