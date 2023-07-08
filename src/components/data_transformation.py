@@ -1,3 +1,5 @@
+# Can u add test using pytest
+
 """This module provides a class for data transformation and preprocessing."""
 
 import sys
@@ -79,7 +81,7 @@ class DataTransformation:
             raise CustomException(error, sys) from error
 
     def initiate_data_transformation(
-        self, features: List[str], target: str
+        self, target: str, transformer: ColumnTransformer
     ) -> tuple[Any, Any, str]:
         """Initiate the data transformation process.
 
@@ -101,9 +103,7 @@ class DataTransformation:
 
             logger.info("Read train and test data completed")
 
-            logger.info("Obtaining preprocessing object")
-
-            preprocessing_obj = self.get_data_transformer_object(features)
+            logger.info("Splitting data")
 
             X_train = train_df.drop(columns=[target], axis=1)
             y_train = train_df[target]
@@ -115,8 +115,8 @@ class DataTransformation:
                 "Applying preprocessing object on training dataframe and testing dataframe."
             )
 
-            X_train_arr = preprocessing_obj.fit_transform(X_train)
-            X_test_arr = preprocessing_obj.transform(X_test)
+            X_train_arr = transformer.fit_transform(X_train)
+            X_test_arr = transformer.transform(X_test)
 
             train_arr = np.c_[X_train_arr, np.array(y_train)]
             test_arr = np.c_[X_test_arr, np.array(y_test)]
@@ -125,7 +125,7 @@ class DataTransformation:
 
             save_object(
                 file_path=self.filepath_config.preprocessor_path,
-                obj=preprocessing_obj,
+                obj=transformer,
             )
 
             return (
@@ -138,5 +138,8 @@ class DataTransformation:
 
 
 if __name__ == "__main__":
-    t = DataTransformation()
-    t.initiate_data_transformation(["password"], "strength")
+    features = ["password"]
+    target = "strength"
+    data_transformation = DataTransformation()
+    transformer = data_transformation.get_data_transformer_object(features)
+    data_transformation.initiate_data_transformation(target, transformer)
