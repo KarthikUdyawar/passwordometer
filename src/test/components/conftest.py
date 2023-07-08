@@ -15,6 +15,7 @@ import pytest
 
 from src.components.data_ingestion import DataIngestion
 from src.components.data_pusher import DataPusher
+from src.components.data_transformation import DataTransformation
 from src.test.components.config import MockFilePathConfig, MockMongoDBConfig
 
 
@@ -43,3 +44,15 @@ def data_ingestion_fixture(data_pusher: DataPusher) -> DataIngestion:
     data_ingestion = DataIngestion()
     data_ingestion.dataframe = data_pusher.get_data_from_mongodb()
     return data_ingestion
+
+
+@pytest.fixture(scope="session", name="data_transformation")  # type: ignore
+def data_transformation_fixture() -> DataTransformation:
+    """Fixture to create a DataTransformation object before each test.
+
+    Returns:
+        DataTransformation: An instance of the DataTransformation class.
+    """
+    data_transformation = DataTransformation()
+    data_transformation.filepath_config = MockFilePathConfig()
+    return data_transformation

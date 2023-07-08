@@ -31,3 +31,5 @@ class MockFilePathConfig(FilePathConfig):
 
     raw_data_path: str = os.path.join("src/test/data", "sample.txt")
     train_data_path: str = os.path.join("src/test/data", "train.csv")
+    test_data_path: str = os.path.join("src/test/data", "test.csv")
+    preprocessor_path: str = os.path.join("src/test/data", "preprocessor.pkl")

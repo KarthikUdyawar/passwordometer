@@ -133,5 +133,8 @@ class DataIngestion:
 
 if __name__ == "__main__":
     obj = DataIngestion()
+    # obj.dataframe =
+    obj.filepath_config.train_data_path = "src/test/data/train.csv"
+    obj.filepath_config.test_data_path = "src/test/data/test.csv"
     obj.initiate_data_ingestion()
-    obj.data_report()
+    # obj.data_report()
