@@ -1,10 +1,12 @@
+"""This module provides a class for model training and evaluation."""
+
 import sys
+from typing import Any, Tuple
 
 import numpy as np
 from sklearn.metrics import r2_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.tree import DecisionTreeRegressor
-
 
 from src.interface.config import FilePathConfig
 from src.middleware.exception import CustomException
@@ -13,7 +15,10 @@ from src.utils.file_manager import save_object
 
 
 class ModelTrainer:
-    def __init__(self):
+    """A class for model training and evaluation."""
+
+    def __init__(self) -> None:
+        """Initialize the ModelTrainer object."""
         self.filepath_config = FilePathConfig()
         self.models = {
             "Decision Tree": DecisionTreeRegressor(),
@@ -31,7 +36,24 @@ class ModelTrainer:
             },
         }
 
-    def evaluate_models(self, train_array: np.ndarray, test_array: np.ndarray):
+    def evaluate_models(
+        self,
+        train_array: np.ndarray[np.float64, Any],
+        test_array: np.ndarray[np.float64, Any],
+    ) -> dict[str, Any]:
+        """Evaluate multiple models using GridSearchCV.
+
+        Args:
+            train_array (np.ndarray): Training data array.
+            test_array (np.ndarray): Testing data array.
+
+        Raises:
+            CustomException: If there is an error during model evaluation.
+
+        Returns:
+            dict: A dictionary containing the model names as keys and
+            their evaluation scores as values.
+        """
         try:
             logger.info("Split training and test input data")
             X_train, y_train, X_test, y_test = (
@@ -48,7 +70,7 @@ class ModelTrainer:
             for i in range(len(list(self.models))):
                 model = list(self.models.values())[i]
                 para = self.params[list(self.models.keys())[i]]
-                logger.debug(f"{i} Model: {model}, parameter: {para}")
+                logger.debug("%s Model: %s, parameter: %s", i, model, para)
 
                 logger.info("Started training")
                 gs = GridSearchCV(model, para, cv=3, n_jobs=-1, verbose=1)
@@ -78,14 +100,32 @@ class ModelTrainer:
         except Exception as e:
             raise CustomException(e, sys) from e
 
-    def select_best_model(self, test_report, test_array):
+    def select_best_model(
+        self,
+        test_report: dict[str, Any],
+        test_array: np.ndarray[np.float64, Any],
+    ) -> Tuple[str, float | Any]:
+        """Select the best model based on the evaluation scores.
+
+        Args:
+            test_report (dict): A dictionary containing the model names as
+            keys and their evaluation scores as values.
+            test_array (np.ndarray): Testing data array.
+
+        Raises:
+            CustomException: If there is an error during model selection.
+
+        Returns:
+            Tuple[str, float | Any]: A tuple containing the name of the best
+            model and its evaluation score.
+        """
         try:
             logger.info("Started selecting best models")
 
-            ## To get best model score from dict
+            # To get best model score from dict
             best_model_score = max(sorted(test_report.values()))
 
-            ## To get best model name from dict
+            # To get best model name from dict
             best_model_name = list(test_report.keys())[
                 list(test_report.values()).index(best_model_score)
             ]
@@ -125,8 +165,6 @@ if __name__ == "__main__":
     )
     logger.debug(len(train_arr))
     model_trainer = ModelTrainer()
-    test_report = model_trainer.evaluate_models(train_arr, test_arr)
-    best_model_name, score = model_trainer.select_best_model(
-        test_report, train_arr
-    )
-    logger.info(f"best_model_name: {best_model_name} Score: {score}")
+    report = model_trainer.evaluate_models(train_arr, test_arr)
+    name_model, score = model_trainer.select_best_model(report, train_arr)
+    logger.info("Best model: %s Score: %s", name_model, score)
