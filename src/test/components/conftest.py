@@ -16,6 +16,7 @@ import pytest
 from src.components.data_ingestion import DataIngestion
 from src.components.data_pusher import DataPusher
 from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainer
 from src.test.components.config import MockFilePathConfig, MockMongoDBConfig
 
 
@@ -56,3 +57,15 @@ def data_transformation_fixture() -> DataTransformation:
     data_transformation = DataTransformation()
     data_transformation.filepath_config = MockFilePathConfig()
     return data_transformation
+
+
+@pytest.fixture(scope="session", name="model_trainer")  # type: ignore
+def model_trainer_fixture() -> ModelTrainer:
+    """Fixture to create a ModelTrainer object before each test.
+
+    Returns:
+        ModelTrainer: An instance of the ModelTrainer class.
+    """
+    model_trainer = ModelTrainer()
+    model_trainer.filepath_config = MockFilePathConfig()
+    return model_trainer
