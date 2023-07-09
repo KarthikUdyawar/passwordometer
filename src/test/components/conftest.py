@@ -1,15 +1,6 @@
 """
-Module: test_fixtures
-
 This module contains test fixtures for the unit tests of the data ingestion
 and data pusher components.
-
-Fixtures:
-- data_pusher_fixture: Fixture for creating a DataPusher instance with
-mock configurations.
-- data_ingestion_fixture: Fixture to create a DataIngestion object
-before each test.
-
 """
 import pytest
 

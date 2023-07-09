@@ -163,7 +163,6 @@ if __name__ == "__main__":
     train_arr, test_arr, _ = data_transformation.initiate_data_transformation(
         target="strength", transformer=transformer_obj
     )
-    logger.debug(len(train_arr))
     model_trainer = ModelTrainer()
     report = model_trainer.evaluate_models(train_arr, test_arr)
     name_model, score = model_trainer.select_best_model(report, train_arr)
