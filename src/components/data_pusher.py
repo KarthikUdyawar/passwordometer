@@ -3,6 +3,7 @@ Module for data pushing functionality.
 """
 import sys
 
+import opendatasets as od
 import pandas as pd
 from pymongo import MongoClient
 
@@ -24,15 +25,26 @@ class DataPusher:
         """
         self.mongodb_config = MongoDBConfig()
         self.filepath_config = FilePathConfig()
+        self.num_bins = 10
+        self.sample_size = 2_500
 
-    def initiate_data_push(self) -> None:
+    def initiate_data_push(self) -> pd.DataFrame:
         """Perform the data pushing process.
 
         Raises:
             CustomException: Catches error
+
+        Returns:
+            pd.DataFrame: Clean & Filtered dataset
         """
         try:
             logger.info("Started data push method")
+
+            logger.info("Started downloading data")
+            od.download(
+                self.filepath_config.database_url,
+            )
+            logger.info("Done downloading data")
 
             logger.info("Started fetching data")
             data_frame = pd.read_csv(
@@ -60,17 +72,25 @@ class DataPusher:
             df1["strength"] = df1["password"].apply(calculate_strength)
             logger.info("Done creating target data")
 
-            logger.info("Started data pushed to MongoDB")
-            self.push_to_mongodb(df1)
-            logger.info("Done data pushed to MongoDB")
+            logger.info("Start balancing data")
 
-            logger.info("Data push completed")
+            df1["bin"] = pd.cut(df1["strength"], self.num_bins, labels=False)
+            sample_df = df1.groupby("bin", group_keys=False).apply(
+                lambda x: x.sample(
+                    min(len(x), self.sample_size), random_state=24
+                )
+            )
+            sample_df.drop(["bin"], axis=1, inplace=True)
+            logger.info("Data balancing data")
+
+            logger.info("Done clean & filtered dataset")
+            return sample_df
 
         except Exception as error:
             raise CustomException(error, sys) from error
 
     def push_to_mongodb(
-        self, data_frame: pd.DataFrame, chunk_size: int = 10_00_000
+        self, data_frame: pd.DataFrame, chunk_size: int = 1000
     ) -> None:
         """Push the data to MongoDB.
 
@@ -90,7 +110,7 @@ class DataPusher:
             logger.info("Done connected to MongoDB")
 
             total_rows = data_frame.shape[0]
-            num_chunks = (total_rows // chunk_size) + 1
+            num_chunks = total_rows // chunk_size
 
             logger.info("Started insert data into MongoDB")
             for chunk in range(num_chunks):
@@ -111,9 +131,7 @@ class DataPusher:
         except Exception as error:
             raise CustomException(error, sys) from error
 
-    def get_data_from_mongodb(
-        self, chunk_size: int = 10_00_000
-    ) -> pd.DataFrame:
+    def get_data_from_mongodb(self, chunk_size: int = 1000) -> pd.DataFrame:
         """Retrieve data from MongoDB.
 
         Args:
@@ -134,7 +152,7 @@ class DataPusher:
             logger.info("Done connected to MongoDB")
 
             total_documents = collection.count_documents({})
-            num_chunks = (total_documents // chunk_size) + 1
+            num_chunks = total_documents // chunk_size
 
             data_frame = pd.DataFrame()
 
@@ -154,7 +172,7 @@ class DataPusher:
                     [data_frame, chunk_df], ignore_index=True
                 )
 
-                logger.debug(
+                logger.info(
                     "Fetched Chunk %s/%s from MongoDB", chunk + 1, num_chunks
                 )
 
@@ -175,5 +193,7 @@ class DataPusher:
 
 if __name__ == "__main__":
     data_pusher = DataPusher()
-    df = data_pusher.get_data_from_mongodb()
-    logger.debug(df.info())
+    df = data_pusher.initiate_data_push()
+    data_pusher.push_to_mongodb(df)
+    df2 = data_pusher.get_data_from_mongodb()
+    logger.debug(df2.info())

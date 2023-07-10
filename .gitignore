@@ -159,5 +159,6 @@ backup/
 raw_dataset/
 artifacts/
 notebooks/
+common-password-list-rockyoutxt/
 
 kaggle.json

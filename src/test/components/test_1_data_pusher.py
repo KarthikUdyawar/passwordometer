@@ -14,7 +14,19 @@ def test_initiate_data_push(data_pusher: DataPusher) -> None:
     Args:
         data_pusher (DataPusher): The DataPusher instance.
     """
-    data_pusher.initiate_data_push()
+    dataframe = data_pusher.initiate_data_push()
+    assert isinstance(dataframe, pd.DataFrame)
+    assert dataframe.shape[0] > 0
+
+
+def test_push_to_mongodb(data_pusher: DataPusher) -> None:
+    """Test case for pushing data to MongoDB.
+
+    Args:
+        data_pusher (DataPusher): The DataPusher instance.
+    """
+    dataframe = data_pusher.initiate_data_push()
+    data_pusher.push_to_mongodb(dataframe)
 
 
 def test_get_data_from_mongodb(data_pusher: DataPusher) -> None:
@@ -26,21 +38,6 @@ def test_get_data_from_mongodb(data_pusher: DataPusher) -> None:
     dataframe = data_pusher.get_data_from_mongodb()
     assert isinstance(dataframe, pd.DataFrame)
     assert dataframe.shape[0] > 0
-
-
-def test_push_to_mongodb(data_pusher: DataPusher) -> None:
-    """Test case for pushing data to MongoDB.
-
-    Args:
-        data_pusher (DataPusher): The DataPusher instance.
-    """
-    data_frame = pd.DataFrame(
-        {
-            "password": ["123456", "password"],
-            "strength": [0.17233083320907958, 0.24954265948891105],
-        },
-    )
-    data_pusher.push_to_mongodb(data_frame)
 
 
 if __name__ == "__main__":

@@ -9,9 +9,12 @@ from dataclasses import dataclass
 class FilePathConfig:
     """Configuration class for file paths."""
 
+    database_url: str = "https://www.kaggle.com/datasets/wjburns/common-password-list-rockyoutxt"
+    raw_data_path: str = os.path.join(
+        "common-password-list-rockyoutxt", "rockyou.txt"
+    )
     train_data_path: str = os.path.join("artifacts", "train.csv")
     test_data_path: str = os.path.join("artifacts", "test.csv")
-    raw_data_path: str = os.path.join("raw_dataset", "rockyou.txt")
     preprocessor_path: str = os.path.join("artifacts", "preprocessor.pkl")
     model_path: str = os.path.join("artifacts", "model.pkl")
 
