@@ -37,7 +37,6 @@ class DataIngestion:
         """
         self.filepath_config = FilePathConfig()
         self.data_pusher = DataPusher()
-        self.dataframe: pd.DataFrame = self.data_pusher.get_data_from_mongodb()
 
     def initiate_data_ingestion(self) -> Any:
         """
@@ -59,8 +58,9 @@ class DataIngestion:
                 os.path.dirname(self.filepath_config.train_data_path),
                 exist_ok=True,
             )
+            dataframe = self.data_pusher.get_data_from_mongodb()
             train_set, test_set = train_test_split(
-                self.dataframe, test_size=0.2, random_state=42
+                dataframe, test_size=0.2, random_state=42
             )
             logger.info("Done Train test split")
 
@@ -133,8 +133,6 @@ class DataIngestion:
 
 if __name__ == "__main__":
     obj = DataIngestion()
-    # obj.dataframe =
     obj.filepath_config.train_data_path = "src/test/data/train.csv"
     obj.filepath_config.test_data_path = "src/test/data/test.csv"
     obj.initiate_data_ingestion()
-    # obj.data_report()
