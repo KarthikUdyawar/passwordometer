@@ -165,5 +165,5 @@ if __name__ == "__main__":
     )
     model_trainer = ModelTrainer()
     report = model_trainer.evaluate_models(train_arr, test_arr)
-    name_model, score = model_trainer.select_best_model(report, train_arr)
+    name_model, score = model_trainer.select_best_model(report, test_arr)
     logger.info("Best model: %s Score: %s", name_model, score)
