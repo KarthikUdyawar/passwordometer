@@ -32,9 +32,8 @@ def data_ingestion_fixture(data_pusher: DataPusher) -> DataIngestion:
     Returns:
         DataIngestion: An instance of the DataIngestion class.
     """
-    data_ingestion = DataIngestion()
-    data_ingestion.dataframe = data_pusher.get_data_from_mongodb()
-    return data_ingestion
+    # data_ingestion.dataframe = data_pusher.get_data_from_mongodb()
+    return DataIngestion()
 
 
 @pytest.fixture(scope="session", name="data_transformation")  # type: ignore
