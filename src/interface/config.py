@@ -2,7 +2,55 @@
 Module for configuration classes related to file paths and MongoDB settings.
 """
 import os
+import sys
 from dataclasses import dataclass
+from typing import Any
+
+import numpy as np
+import pandas as pd
+
+from src.middleware.exception import CustomException
+
+
+class CustomData:
+    """A class for handling custom data."""
+
+    def data2df(self, password: str) -> pd.DataFrame:
+        """Convert the given password into a pandas DataFrame.
+
+        Args:
+            password (str): The password to be converted.
+
+        Raises:
+            CustomException: If there is an error during the conversion.
+
+        Returns:
+            pd.DataFrame: The password converted into a pandas DataFrame.
+        """
+        try:
+            input_data = {
+                "password": [password],
+            }
+
+            return pd.DataFrame(input_data)
+
+        except Exception as error:
+            raise CustomException(error, sys) from error
+
+    def array2data(self, arr: np.ndarray[np.float64, Any]) -> Any:
+        """Convert the given NumPy array to a single value.
+
+        Args:
+            arr (np.ndarray): The NumPy array to be converted.
+
+        Returns:
+            float: The converted value.
+        """
+        try:
+            return arr.item()
+
+        except Exception as error:
+            raise CustomException(error, sys) from error
 
 
 @dataclass
