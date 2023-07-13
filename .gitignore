@@ -160,5 +160,6 @@ raw_dataset/
 artifacts/
 notebooks/
 common-password-list-rockyoutxt/
+sample_artifacts/
 
 kaggle.json

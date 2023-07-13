@@ -10,7 +10,7 @@ from src.components.data_transformation import DataTransformation
 from src.components.model_trainer import ModelTrainer
 from src.interface.config import CustomData
 from src.pipe.pipeline import Pipeline
-from src.test.components.config import MockMongoDBConfig
+from src.test.config import MockFilePathConfig, MockMongoDBConfig
 
 
 @pytest.fixture(scope="session", name="data_pusher")  # type: ignore
@@ -22,6 +22,7 @@ def data_pusher_fixture() -> DataPusher:
     """
     data_pusher = DataPusher()
     data_pusher.mongodb_config = MockMongoDBConfig()
+    data_pusher.filepath_config = MockFilePathConfig()
     return data_pusher
 
 
@@ -33,7 +34,9 @@ def data_ingestion_fixture() -> DataIngestion:
     Returns:
         DataIngestion: An instance of the DataIngestion class.
     """
-    return DataIngestion()
+    data_ingestion = DataIngestion()
+    data_ingestion.filepath_config = MockFilePathConfig()
+    return data_ingestion
 
 
 @pytest.fixture(scope="session", name="data_transformation")  # type: ignore
@@ -43,7 +46,9 @@ def data_transformation_fixture() -> DataTransformation:
     Returns:
         DataTransformation: An instance of the DataTransformation class.
     """
-    return DataTransformation()
+    data_transformation = DataTransformation()
+    data_transformation.filepath_config = MockFilePathConfig()
+    return data_transformation
 
 
 @pytest.fixture(scope="session", name="model_trainer")  # type: ignore
@@ -53,7 +58,9 @@ def model_trainer_fixture() -> ModelTrainer:
     Returns:
         ModelTrainer: An instance of the ModelTrainer class.
     """
-    return ModelTrainer()
+    model_trainer = ModelTrainer()
+    model_trainer.filepath_config = MockFilePathConfig()
+    return model_trainer
 
 
 @pytest.fixture(scope="session", name="pipeline")  # type: ignore
@@ -64,6 +71,7 @@ def pipeline_fixture() -> Pipeline:
         Pipeline: An instance of the Pipeline class.
     """
     pipeline = Pipeline()
+    pipeline.filepath_config = MockFilePathConfig()
     pipeline.data_pusher.mongodb_config = MockMongoDBConfig()
     pipeline.data_pusher.mongodb_config.collection_name = "test_sample"
     return pipeline
