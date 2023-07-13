@@ -14,7 +14,7 @@ def test_initiate_data_push(data_pusher: DataPusher) -> None:
     Args:
         data_pusher (DataPusher): The DataPusher instance.
     """
-    dataframe = data_pusher.initiate_data_push()
+    dataframe = data_pusher.initiate_data_push(500, 10)
     assert isinstance(dataframe, pd.DataFrame)
     assert dataframe.shape[0] > 0
 
@@ -25,7 +25,7 @@ def test_push_to_mongodb(data_pusher: DataPusher) -> None:
     Args:
         data_pusher (DataPusher): The DataPusher instance.
     """
-    dataframe = data_pusher.initiate_data_push()
+    dataframe = data_pusher.initiate_data_push(500, 10)
     data_pusher.push_to_mongodb(dataframe)
 
 

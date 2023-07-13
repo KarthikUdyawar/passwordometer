@@ -36,11 +36,12 @@ class DataIngestion:
         Initializes the DataIngestion class.
         """
         self.filepath_config = FilePathConfig()
-        self.data_pusher = DataPusher()
 
-    def initiate_data_ingestion(self) -> Any:
-        """
-        Initiates the data ingestion process.
+    def initiate_data_ingestion(self, data_frame: pd.DataFrame) -> Any:
+        """Initiates the data ingestion process.
+
+        Args:
+            data_frame (pd.DataFrame): Dataframe got form mongoDB
 
         Raises:
             CustomException: Raised when an error occurs
@@ -58,9 +59,8 @@ class DataIngestion:
                 os.path.dirname(self.filepath_config.train_data_path),
                 exist_ok=True,
             )
-            dataframe = self.data_pusher.get_data_from_mongodb()
             train_set, test_set = train_test_split(
-                dataframe, test_size=0.2, random_state=42
+                data_frame, test_size=0.2, random_state=42
             )
             logger.info("Done Train test split")
 
@@ -135,4 +135,5 @@ if __name__ == "__main__":
     obj = DataIngestion()
     obj.filepath_config.train_data_path = "src/test/data/train.csv"
     obj.filepath_config.test_data_path = "src/test/data/test.csv"
-    obj.initiate_data_ingestion()
+    dataframe = DataPusher().get_data_from_mongodb()
+    obj.initiate_data_ingestion(dataframe)

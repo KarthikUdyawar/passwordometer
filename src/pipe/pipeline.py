@@ -1,12 +1,11 @@
 """
-A pipeline for data ingestion, transformation, model training, 
+A pipeline for data ingestion, transformation, model training,
 and prediction.
 """
 
 import sys
 from typing import Any
 
-import numpy as np
 import pandas as pd
 
 from src.components.data_ingestion import DataIngestion
@@ -43,7 +42,8 @@ class Pipeline:
         try:
             df = self.data_pusher.initiate_data_push()
             self.data_pusher.push_to_mongodb(df)
-            self.data_ingestion.initiate_data_ingestion()
+            dataframe = self.data_pusher.get_data_from_mongodb()
+            self.data_ingestion.initiate_data_ingestion(dataframe)
             self.data_ingestion.data_report()
 
         except Exception as error:
@@ -79,7 +79,7 @@ class Pipeline:
         except Exception as error:
             raise CustomException(error, sys) from error
 
-    def predict(self, features: pd.DataFrame) -> np.ndarray[np.float64, Any]:
+    def predict(self, features: pd.DataFrame) -> Any:
         """Perform prediction on the given features.
 
         Args:
@@ -114,32 +114,21 @@ class Pipeline:
 
 
 if __name__ == "__main__":
+    logger.info(
+        "\nMain menu\n1. Push data\n2. Train pipeline\n3. Predict pipeline\n"
+    )
+    choice = int(input("Enter the choice: "))
 
-    def predict_usage():
+    if choice == 1:
+        Pipeline().push_data()
+    elif choice == 2:
+        Pipeline().train()
+    elif choice == 3:
         custom_data = CustomData()
         input_data = str(input("Enter the password: "))
         password = custom_data.data2df(input_data)
         strength = Pipeline().predict(password)
         value = custom_data.array2data(strength)
-        logger.info(f"\nPassword: {input_data} Strength: {value}")
-
-    def train_usage():
-        Pipeline().train()
-
-    def push_data_usage():
-        Pipeline().push_data()
-
-    print("Main menu")
-    print("1. Push data")
-    print("2. Train pipeline")
-    print("3. Predict pipeline")
-    choice = int(input("Enter the choice: "))
-
-    if choice == 1:
-        push_data_usage()
-    elif choice == 2:
-        train_usage()
-    elif choice == 3:
-        predict_usage()
+        logger.info("\nPassword: %s Strength: %f", input_data, value)
     else:
         raise CustomException("Invalid input", sys)

@@ -25,11 +25,15 @@ class DataPusher:
         """
         self.mongodb_config = MongoDBConfig()
         self.filepath_config = FilePathConfig()
-        self.num_bins = 10
-        self.sample_size = 2_500
 
-    def initiate_data_push(self) -> pd.DataFrame:
+    def initiate_data_push(
+        self, sample_size: int = 2500, num_bins: int = 10
+    ) -> pd.DataFrame:
         """Perform the data pushing process.
+
+        Args:
+            sample_size (int, optional): Size of the sample for each bin. Defaults to 2500.
+            num_bins (int, optional): Total number of bins. Defaults to 10.
 
         Raises:
             CustomException: Catches error
@@ -74,11 +78,9 @@ class DataPusher:
 
             logger.info("Start balancing data")
 
-            df1["bin"] = pd.cut(df1["strength"], self.num_bins, labels=False)
+            df1["bin"] = pd.cut(df1["strength"], num_bins, labels=False)
             sample_df = df1.groupby("bin", group_keys=False).apply(
-                lambda x: x.sample(
-                    min(len(x), self.sample_size), random_state=24
-                )
+                lambda x: x.sample(min(len(x), sample_size), random_state=24)
             )
             sample_df.drop(["bin"], axis=1, inplace=True)
             logger.info("Data balancing data")
@@ -185,6 +187,12 @@ class DataPusher:
             raise CustomException(error, sys) from error
 
     def _close_db(self, message: str, client: MongoClient) -> None:
+        """Closing MongoDB client
+
+        Args:
+            message (str): Log info message
+            client (MongoClient): MongoClient object
+        """
         logger.info(message)
         logger.info("Started close MongoDB")
         client.close()

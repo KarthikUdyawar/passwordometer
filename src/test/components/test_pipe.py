@@ -1,9 +1,9 @@
 """This module contains test cases for the Pipeline class."""
-import pytest
 import numpy as np
+import pytest
 
-from src.pipe.pipeline import Pipeline
 from src.interface.config import CustomData
+from src.pipe.pipeline import Pipeline
 
 
 def test_push_data(pipeline: Pipeline) -> None:
@@ -12,7 +12,8 @@ def test_push_data(pipeline: Pipeline) -> None:
     Args:
         pipeline (Pipeline): The Pipeline instance.
     """
-    assert pipeline.push_data() is None
+    pipeline.push_data()
+
 
 def test_train(pipeline: Pipeline) -> None:
     """Test case for the `train` method.
@@ -20,9 +21,10 @@ def test_train(pipeline: Pipeline) -> None:
     Args:
         pipeline (Pipeline): The Pipeline instance.
     """
-    assert pipeline.train() is None
+    pipeline.train()
 
-def test_predict(pipeline: Pipeline, custom_data:CustomData) -> None:
+
+def test_predict(pipeline: Pipeline, custom_data: CustomData) -> None:
     """Test case for the `predict` method.
 
     Args:
@@ -36,6 +38,6 @@ def test_predict(pipeline: Pipeline, custom_data:CustomData) -> None:
     assert isinstance(result, np.ndarray)
     assert isinstance(value, float)
 
+
 if __name__ == "__main__":
     pytest.main()
-    

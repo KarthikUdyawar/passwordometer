@@ -8,6 +8,24 @@ from src.components.data_transformation import DataTransformation
 from src.components.model_trainer import ModelTrainer
 
 
+def test_init(model_trainer: ModelTrainer) -> None:
+    """Test case for the `__init__` method.
+
+    Args:
+        model_trainer (ModelTrainer): The ModelTrainer instance.
+    """
+    assert isinstance(model_trainer.models, dict)
+    assert len(model_trainer.models) == 1
+    assert "Decision Tree" in model_trainer.models
+    assert isinstance(
+        model_trainer.models["Decision Tree"], DecisionTreeRegressor
+    )
+    assert isinstance(model_trainer.params, dict)
+    assert len(model_trainer.params) == 1
+    assert "Decision Tree" in model_trainer.params
+    assert isinstance(model_trainer.params["Decision Tree"], dict)
+
+
 def test_evaluate_models(
     model_trainer: ModelTrainer, data_transformation: DataTransformation
 ) -> None:
@@ -59,24 +77,6 @@ def test_select_best_model(
     assert len(result) == 2
     assert isinstance(result[0], str)
     assert isinstance(result[1], float)
-
-
-def test_init(model_trainer: ModelTrainer) -> None:
-    """Test case for the `__init__` method.
-
-    Args:
-        model_trainer (ModelTrainer): The ModelTrainer instance.
-    """
-    assert isinstance(model_trainer.models, dict)
-    assert len(model_trainer.models) == 1
-    assert "Decision Tree" in model_trainer.models
-    assert isinstance(
-        model_trainer.models["Decision Tree"], DecisionTreeRegressor
-    )
-    assert isinstance(model_trainer.params, dict)
-    assert len(model_trainer.params) == 1
-    assert "Decision Tree" in model_trainer.params
-    assert isinstance(model_trainer.params["Decision Tree"], dict)
 
 
 if __name__ == "__main__":
