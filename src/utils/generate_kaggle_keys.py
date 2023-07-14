@@ -1,14 +1,20 @@
 """Generates kaggle.json file"""
 import json
+import os
 from dotenv import dotenv_values
 
-# Load secrets from .env file
-secrets = dotenv_values(".env")
+# # Load secrets from .env file
+# secrets = dotenv_values(".env")
+
+config = {
+    **dotenv_values(".env"),  # load shared development variables
+    **os.environ,  # override loaded values with environment variables
+}
 
 # Generate kaggle.json
 kaggle_credentials = {
-    "username": secrets["KAGGLE_USERNAME"],
-    "key": secrets["KAGGLE_KEY"],
+    "username": config["KAGGLE_USERNAME"],
+    "key": config["KAGGLE_KEY"],
 }
 
 # Save the credentials as kaggle.json
