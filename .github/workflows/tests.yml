@@ -28,8 +28,11 @@ jobs:
       - name: Build package
         run: pip install -e .
 
-      - name: Run tests
+      - name: Generate kaggle.json
         env:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
-        run: pytest -s src/test
+        run: python src/utils/generate_kaggle_keys.py
+
+      - name: Run tests
+        run: pytest src/test
