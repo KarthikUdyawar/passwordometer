@@ -53,4 +53,5 @@ repos:
           - pymongo
           - password_strength
           - scikit-learn
+          - opendatasets
         args: ["--disable=W0613,C0103"]

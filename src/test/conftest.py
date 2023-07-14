@@ -8,7 +8,9 @@ from src.components.data_ingestion import DataIngestion
 from src.components.data_pusher import DataPusher
 from src.components.data_transformation import DataTransformation
 from src.components.model_trainer import ModelTrainer
-from src.test.components.config import MockFilePathConfig, MockMongoDBConfig
+from src.interface.config import CustomData
+from src.pipe.pipeline import Pipeline
+from src.test.config import MockFilePathConfig, MockMongoDBConfig
 
 
 @pytest.fixture(scope="session", name="data_pusher")  # type: ignore
@@ -21,12 +23,11 @@ def data_pusher_fixture() -> DataPusher:
     data_pusher = DataPusher()
     data_pusher.mongodb_config = MockMongoDBConfig()
     data_pusher.filepath_config = MockFilePathConfig()
-
     return data_pusher
 
 
 @pytest.fixture(scope="session", name="data_ingestion")  # type: ignore
-def data_ingestion_fixture(data_pusher: DataPusher) -> DataIngestion:
+def data_ingestion_fixture() -> DataIngestion:
     """
     Fixture to create a DataIngestion object before each test.
 
@@ -34,7 +35,7 @@ def data_ingestion_fixture(data_pusher: DataPusher) -> DataIngestion:
         DataIngestion: An instance of the DataIngestion class.
     """
     data_ingestion = DataIngestion()
-    data_ingestion.dataframe = data_pusher.get_data_from_mongodb()
+    data_ingestion.filepath_config = MockFilePathConfig()
     return data_ingestion
 
 
@@ -60,3 +61,27 @@ def model_trainer_fixture() -> ModelTrainer:
     model_trainer = ModelTrainer()
     model_trainer.filepath_config = MockFilePathConfig()
     return model_trainer
+
+
+@pytest.fixture(scope="session", name="pipeline")  # type: ignore
+def pipeline_fixture() -> Pipeline:
+    """Fixture to create a Pipeline object before each test.
+
+    Returns:
+        Pipeline: An instance of the Pipeline class.
+    """
+    pipeline = Pipeline()
+    pipeline.filepath_config = MockFilePathConfig()
+    pipeline.data_pusher.mongodb_config = MockMongoDBConfig()
+    pipeline.data_pusher.mongodb_config.collection_name = "test_sample"
+    return pipeline
+
+
+@pytest.fixture(scope="session", name="custom_data")  # type: ignore
+def custom_data_fixture() -> CustomData:
+    """Fixture to create a CustomData object before each test.
+
+    Returns:
+        CustomData: An instance of the CustomData class.
+    """
+    return CustomData()
