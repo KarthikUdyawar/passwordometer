@@ -158,7 +158,6 @@ cython_debug/
 backup/
 raw_dataset/
 artifacts/
-notebooks/
 common-password-list-rockyoutxt/
 sample_artifacts/
 
