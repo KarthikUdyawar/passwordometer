@@ -156,4 +156,9 @@ cython_debug/
 
 # Custom
 backup/
-passwordevaluation/
+raw_dataset/
+artifacts/
+common-password-list-rockyoutxt/
+sample_artifacts/
+
+kaggle.json
