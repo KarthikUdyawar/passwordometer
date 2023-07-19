@@ -54,4 +54,7 @@ repos:
           - password_strength
           - scikit-learn
           - opendatasets
+          - fastapi
+          - pydantic
+          - python-dotenv
         args: ["--disable=W0613,C0103"]
