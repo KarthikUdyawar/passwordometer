@@ -3,7 +3,7 @@ password strength based on a given password."""
 
 from fastapi import APIRouter
 
-from src.api.components import predict_component
+from src.api.components import password_strength_component
 from src.api.schema import PredictionRequest, PredictionResponse
 
 router = APIRouter()
@@ -14,7 +14,7 @@ router = APIRouter()
     summary="Predict password strength",
     description="Predict the strength of a given password.",
 )  # type: ignore
-async def predict(
+async def password_strength(
     request: PredictionRequest,
 ) -> PredictionResponse:
     """
@@ -27,4 +27,4 @@ async def predict(
         PasswordPredictionResponse: The response containing the
         password and its strength prediction.
     """
-    return predict_component(request)
+    return password_strength_component(request)

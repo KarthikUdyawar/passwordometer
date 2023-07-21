@@ -14,7 +14,7 @@ from src.pipe.pipeline import Pipeline
 from src.utils.data_validation import is_valid_password
 
 
-def predict_component(
+def password_strength_component(
     request: PredictionRequest,
 ) -> PredictionResponse:
     """
