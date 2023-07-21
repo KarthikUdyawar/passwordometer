@@ -1,6 +1,6 @@
 """
-This module contains mock configuration classes for file paths
-and MongoDB settings, used for testing purposes.
+This module contains mock configuration classes for file paths and MongoDB 
+settings, used for testing purposes.
 """
 import os
 from dataclasses import dataclass

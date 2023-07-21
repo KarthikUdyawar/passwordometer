@@ -1,9 +1,10 @@
-"""Module summary: This module contains pytest test cases for the FastAPI 
+"""Module summary: This module contains pytest test cases for the FastAPI
 application, including tests for the root endpoint and password strength
 prediction endpoint."""
 
 import pytest
 from fastapi.testclient import TestClient
+
 from src.api.app import app
 
 client = TestClient(app)

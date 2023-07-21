@@ -23,11 +23,11 @@ def password_strength_component(
         request (PredictionRequest): The request containing the password.
 
     Returns:
-        PredictionResponse: The response containing the password and its 
+        PredictionResponse: The response containing the password and its
         strength prediction.
 
     Raises:
-        HTTPException: If the password is invalid or any other custom exception 
+        HTTPException: If the password is invalid or any other custom exception
         occurs.
     """
     try:
