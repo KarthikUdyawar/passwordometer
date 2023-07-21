@@ -85,3 +85,43 @@ def custom_data_fixture() -> CustomData:
         CustomData: An instance of the CustomData class.
     """
     return CustomData()
+
+
+@pytest.fixture(scope="session", name="valid_password")  # type: ignore
+def valid_password_fixture() -> str:
+    """Fixture to create a valid_password object before each test.
+
+    Returns:
+        str: An instance of the valid_password string.
+    """
+    return "StrongPassword123!"
+
+
+@pytest.fixture(scope="session", name="invalid_short_password")  # type: ignore
+def invalid_short_password_fixture() -> str:
+    """Fixture to create a invalid_short_password object before each test.
+
+    Returns:
+        str: An instance of the invalid_short_password string.
+    """
+    return "bad"
+
+
+@pytest.fixture(scope="session", name="invalid_characters_password")  # type: ignore
+def invalid_characters_password_fixture() -> str:
+    """Fixture to create a invalid_characters_password object before each test.
+
+    Returns:
+        str: An instance of the invalid_characters_password string.
+    """
+    return "invalid@password?"
+
+
+@pytest.fixture(scope="session", name="invalid_long_password")  # type: ignore
+def invalid_long_password_fixture() -> str:
+    """Fixture to create a invalid_long_password object before each test.
+
+    Returns:
+        str: An instance of the invalid_long_password string.
+    """
+    return "ux$zzSj4r66Wd4&2%PC^SgFI5@ghY1NWvD**LC72AJt!4G^$epIq6TxKgbMJLPmfJ3@2la"
