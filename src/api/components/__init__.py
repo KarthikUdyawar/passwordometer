@@ -56,8 +56,22 @@ def password_strength_component(
         password_df = custom_data.data2df(password)
         strength = pipeline.predict(password_df)
         value = custom_data.array2data(strength)
+
+        if value <= 0.2:
+            class_strength = "Very week"
+        elif value <= 0.4:
+            class_strength = "Week"
+        elif value <= 0.6:
+            class_strength = "Average"
+        elif value <= 0.8:
+            class_strength = "Strong"
+        else:
+            class_strength = "Very strong"
+
         logger.info("200 OK: Done predict function")
-        return PredictionResponse(password=password, strength=value)
+        return PredictionResponse(
+            password=password, strength=value, class_strength=class_strength
+        )
     except CustomException as error:
         logger.error(error, sys)
         raise HTTPException(status_code=500, detail=error) from error

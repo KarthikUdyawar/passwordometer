@@ -26,3 +26,6 @@ class PredictionResponse(BaseModel):  # type: ignore
     strength: float = Field(
         ..., description="The strength prediction of the password"
     )
+    class_strength: str = Field(
+        ..., description="The class strength prediction of the password"
+    )
