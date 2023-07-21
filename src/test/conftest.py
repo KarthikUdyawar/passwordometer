@@ -94,7 +94,7 @@ def valid_password_fixture() -> str:
     Returns:
         str: An instance of the valid_password string.
     """
-    return "StrongPassword123!"
+    return "^StrOngP@ssw0rd1toB!SD3r#$nHhcs"
 
 
 @pytest.fixture(scope="session", name="invalid_short_password")  # type: ignore
