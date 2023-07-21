@@ -7,7 +7,7 @@ from src.middleware.exception import CustomException
 
 
 def is_valid_password(text: str) -> int:
-    """The is_valid_password function checks whether a given password meets 
+    """The is_valid_password function checks whether a given password meets
     certain criteria and returns an integer value indicating its validity.
 
     Args:
@@ -16,7 +16,7 @@ def is_valid_password(text: str) -> int:
 
     Returns:
     ---
-        int: An integer value representing the validity of the password. 
+        int: An integer value representing the validity of the password.
         It returns 1 if the password is valid, and 0 if it is not.
     """
     try:

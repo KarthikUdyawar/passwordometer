@@ -11,7 +11,7 @@ from src.middleware.logger import logger
 
 def test_custom_exception() -> None:
     """
-    Test CustomException by raising a ZeroDivisionError and wrapping it in a 
+    Test CustomException by raising a ZeroDivisionError and wrapping it in a
     CustomException.
     """
     with pytest.raises(CustomException):
@@ -24,7 +24,7 @@ def test_custom_exception() -> None:
 
 def test_error_message_detail() -> None:
     """
-    Test error_message_detail function by raising a ZeroDivisionError and 
+    Test error_message_detail function by raising a ZeroDivisionError and
     passing it to the function.
     """
     error = ZeroDivisionError("division by zero")

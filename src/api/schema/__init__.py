@@ -1,4 +1,4 @@
-"""This module defines classes for password strength prediction requests and 
+"""This module defines classes for password strength prediction requests and
 responses using Pydantic models."""
 from pydantic import BaseModel, Field
 

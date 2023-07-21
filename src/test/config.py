@@ -1,5 +1,5 @@
 """
-This module contains mock configuration classes for file paths and MongoDB 
+This module contains mock configuration classes for file paths and MongoDB
 settings, used for testing purposes.
 """
 import os
