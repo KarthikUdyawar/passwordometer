@@ -25,7 +25,7 @@ def test_predict_password_strength_valid(valid_password: str) -> None:
     """
     response = client.post("/predict", json={"password": valid_password})
     assert response.status_code == 200
-    assert response.json()["class_strength"] == "Very Strong"
+    assert response.json()["class_strength"] == "Very strong"
 
 
 def test_predict_password_strength_invalid_short(
