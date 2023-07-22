@@ -1,5 +1,5 @@
-"""This module defines a FastAPI router for predicting
-password strength based on a given password."""
+"""This module defines a FastAPI router for predicting password strength based
+on a given password."""
 
 from fastapi import APIRouter
 
@@ -24,7 +24,7 @@ async def password_strength(
         request (PasswordPredictionRequest): The request containing the password.
 
     Returns:
-        PasswordPredictionResponse: The response containing the
-        password and its strength prediction.
+        PasswordPredictionResponse: The response containing the password and
+        its strength prediction.
     """
     return password_strength_component(request)

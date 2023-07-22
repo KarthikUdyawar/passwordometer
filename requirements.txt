@@ -50,7 +50,9 @@ fsspec==2023.5.0
 graphviz==0.20.1
 h11==0.14.0
 htmlmin==0.1.12
+httpcore==0.17.3
 httptools==0.6.0
+httpx==0.24.1
 idna==3.4
 ImageHash==4.3.1
 imbalanced-learn==0.10.0
