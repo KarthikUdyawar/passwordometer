@@ -71,7 +71,7 @@ jobs:
           context: .
           push: true
           tags: |
-            docker.pkg.github.com/${{ github.repository }}/$image_name::${{ github.sha }}
+            docker.pkg.github.com/${{ github.repository }}/$image_name:${{ github.sha }}
         env:
           image_name: passwordometer-api
 
