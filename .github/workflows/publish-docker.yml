@@ -100,7 +100,6 @@ jobs:
           push: true
           tags: |
             docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
-            ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
         env:
           IMAGE_NAME: passwordometer-api
