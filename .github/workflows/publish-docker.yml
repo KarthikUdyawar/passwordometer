@@ -113,7 +113,7 @@ jobs:
 
       - name: Build the Docker image in Github package
         run: |
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest ghcr.io/${{ github.repository }}/${{ env.IMAGE_NAME }}:latest
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }} ghcr.io/${{ github.repository }}/${{ env.IMAGE_NAME }}:latest
         env:
           image_name: passwordometer-api
       
