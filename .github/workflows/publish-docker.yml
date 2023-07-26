@@ -115,12 +115,12 @@ jobs:
         run: |
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }} ghcr.io/${{ github.repository }}/${{ env.IMAGE_NAME }}:latest
         env:
-          image_name: passwordometer-api
+          IMAGE_NAME: passwordometer-api
       
       - name: Push the Docker image in Github package
         run: |
           docker push ghcr.io/${{ github.repository }}/${{ env.IMAGE_NAME }}:latest
         env:
-          image_name: passwordometer-api
+          IMAGE_NAME: passwordometer-api
 
       
