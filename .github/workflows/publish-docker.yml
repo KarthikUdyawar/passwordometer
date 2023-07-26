@@ -57,9 +57,9 @@ jobs:
       #   env:
       #     image_name: passwordometer-api
 
-      # New Step for Publishing to GitHub Packages
+      #* New Step for Publishing to GitHub Packages
       - name: GitHub Package Login
-        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        uses: docker/login-action@v2.1.0
         with:
           # registry: docker.pkg.github.com
           registry: ghcr.io
@@ -105,8 +105,22 @@ jobs:
       #   env:
       #     IMAGE_NAME: passwordometer-api
 
-      - name: 'Build:dockerimage'
-        uses: docker/build-push-action@v4
-        with:
-          push: true
-          tags: latest
+      # - name: 'Build:dockerimage'
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     push: true
+      #     tags: latest
+
+      - name: Build the Docker image in Github package
+        run: |
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest ghcr.io/${{ github.repository }}/${{ env.IMAGE_NAME }}:latest
+        env:
+          image_name: passwordometer-api
+      
+      - name: Push the Docker image in Github package
+        run: |
+          docker push ghcr.io/${{ github.repository }}/${{ env.IMAGE_NAME }}:latest
+        env:
+          image_name: passwordometer-api
+
+      
