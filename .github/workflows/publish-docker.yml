@@ -47,15 +47,15 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      # - name: Build the Docker image
-      #   run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/$image_name:latest
-      #   env:
-      #     image_name: passwordometer-api
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+        env:
+          IMAGE_NAME: passwordometer-api
 
-      # - name: Docker Push
-      #   run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/$image_name:latest
-      #   env:
-      #     image_name: passwordometer-api
+      - name: Docker Push
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+        env:
+          IMAGE_NAME: passwordometer-api
 
       #* New Step for Publishing to GitHub Packages
       - name: GitHub Package Login
@@ -113,7 +113,7 @@ jobs:
 
       - name: Build the Docker image in Github package
         run: |
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }} ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
         env:
           IMAGE_NAME: passwordometer-api
       
