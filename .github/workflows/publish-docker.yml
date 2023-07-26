@@ -65,15 +65,15 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
-        with:
-          context: .
-          push: true
-          tags: |
-            docker.pkg.github.com/${{ github.repository }}/$image_name:${{ github.sha }}
-        env:
-          image_name: passwordometer-api
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: |
+      #       docker.pkg.github.com/${{ github.repository }}/$image_name:${{ github.sha }}
+      #   env:
+      #     image_name: passwordometer-api
 
       # - name: Tag the Docker image for GitHub Packages
       #   run: docker tag ${{ secrets.DOCKERHUB_USERNAME }}/$image_name:latest docker.pkg.github.com/${{ github.repository }}/$image_name:latest
@@ -84,3 +84,23 @@ jobs:
       #   run: docker push docker.pkg.github.com/${{ github.repository }}/$image_name:latest
       #   env:
       #     image_name: passwordometer-api
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}
+        env:
+          IMAGE_NAME: passwordometer-api
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: |
+            docker.pkg.github.com/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
+            ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+        env:
+          IMAGE_NAME: passwordometer-api
