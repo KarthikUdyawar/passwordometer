@@ -32,6 +32,7 @@ jobs:
         env:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+          MONGODB_CONN_STRING: ${{ secrets.MONGODB_CONN_STRING }}
         run: python src/utils/generate_kaggle_keys.py
 
       - name: Run tests
