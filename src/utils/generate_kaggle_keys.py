@@ -1,6 +1,5 @@
 """Generates kaggle.json file"""
 import json
-import os
 
 from src.interface.config import config
 
