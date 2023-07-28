@@ -36,4 +36,6 @@ jobs:
         run: python src/utils/generate_kaggle_keys.py
 
       - name: Run tests
+        env:
+          MONGODB_CONN_STRING: ${{ secrets.MONGODB_CONN_STRING }}
         run: pytest src/test
