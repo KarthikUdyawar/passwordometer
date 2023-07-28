@@ -157,9 +157,19 @@ cython_debug/
 # Custom
 backup/
 raw_dataset/
-artifacts/
+# artifacts/
 common-password-list-rockyoutxt/
 sample_artifacts/
 logs/
 
+notebooks/
+src/test/
+imgs/
+
 kaggle.json
+
+.git
+.github
+.pre-commit-config.yaml
+.gitignore
+sample.emv
