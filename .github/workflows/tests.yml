@@ -22,6 +22,9 @@ jobs:
           mongodb-replica-set: test-rs
           mongodb-port: 27017
 
+      - name: Update pip
+        run: pip install --upgrade pip
+
       - name: Install dependencies
         run: pip install -r requirements.txt
 
