@@ -8,8 +8,14 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
+from dotenv import dotenv_values
 
 from src.middleware.exception import CustomException
+
+config = {
+    **dotenv_values(".env"),  # load shared development variables
+    **os.environ,  # override loaded values with environment variables
+}
 
 
 class CustomData:
@@ -71,6 +77,6 @@ class FilePathConfig:
 class MongoDBConfig:
     """Configuration class for MongoDB."""
 
-    mongodb_connection_string: str = "mongodb://localhost:27017/"
+    mongodb_connection_string: str = config["MONGODB_CONN_STRING"]
     database_name: str = "passwordometer"
     collection_name: str = "password_dataset"
