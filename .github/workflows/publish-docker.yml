@@ -48,7 +48,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Build the Docker image
-        run: docker-compose build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+        run: docker-compose build . --file Dockerfile -e KAGGLE_USERNAME=${{ env.KAGGLE_USERNAME }} KAGGLE_KEY=${{ env.KAGGLE_KEY }} MONGODB_CONN_STRING=${{ env.MONGODB_CONN_STRING }} --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
         env:
           IMAGE_NAME: passwordometer-api
           TAG: 1.0.1
