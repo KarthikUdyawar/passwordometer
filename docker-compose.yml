@@ -6,9 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - KAGGLE_USERNAME: ${KAGGLE_USERNAME}
-        - KAGGLE_KEY: ${KAGGLE_KEY}
-        - MONGODB_CONN_STRING: ${MONGODB_CONN_STRING}
+        - KAGGLE_USERNAME: ${{ KAGGLE_USERNAME }}
+        - KAGGLE_KEY: ${{ KAGGLE_KEY }}
+        - MONGODB_CONN_STRING: ${{ MONGODB_CONN_STRING }}
     env_file:
       - .env
     ports:
