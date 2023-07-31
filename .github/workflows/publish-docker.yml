@@ -55,7 +55,7 @@ jobs:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
           MONGODB_CONN_STRING: ${{ secrets.MONGODB_CONN_STRING }}
-          
+
       - name: Docker Push
         run: docker-compose push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
         env:
