@@ -5,18 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-<<<<<<< Updated upstream
-      args:
-        - KAGGLE_USERNAME: ${{ KAGGLE_USERNAME }}
-        - KAGGLE_KEY: ${{ KAGGLE_KEY }}
-        - MONGODB_CONN_STRING: ${{ MONGODB_CONN_STRING }}
-=======
       # args:
       #   - KAGGLE_USERNAME: ${KAGGLE_USERNAME}
       #   - KAGGLE_KEY: ${KAGGLE_KEY}
       #   - MONGODB_CONN_STRING: ${MONGODB_CONN_STRING}
->>>>>>> Stashed changes
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     ports:
       - "80:80"
