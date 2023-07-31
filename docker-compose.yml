@@ -7,5 +7,9 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
+    environment:
+      - KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      - KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      - MONGODB_CONN_STRING: ${{ secrets.MONGODB_CONN_STRING }}
     ports:
       - "80:80"
