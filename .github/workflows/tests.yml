@@ -23,7 +23,7 @@ jobs:
           mongodb-port: 27017
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r dev-requirements.txt
 
       - name: Build package
         run: pip install -e .
