@@ -16,9 +16,19 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 RUN pip install -e .
 
-RUN python src/utils/generate_kaggle_keys.py
+RUN --mount=type=secret,id=KAGGLE_USERNAME \
+    --mount=type=secret,id=KAGGLE_KEY \
+    export KAGGLE_USERNAME=$(cat /run/secrets/KAGGLE_USERNAME) && \
+    export KAGGLE_KEY=$(cat /run/secrets/KAGGLE_KEY) && \
+    python src/utils/generate_kaggle_keys.py
 
-RUN python src/utils/build_pipeline.py
+RUN --mount=type=secret,id=MONGODB_CONN_STRING \
+    export MONGODB_CONN_STRING=$(cat /run/secrets/MONGODB_CONN_STRING) && \
+    python src/utils/build_pipeline.py
+
+# RUN python src/utils/generate_kaggle_keys.py
+
+# RUN python src/utils/build_pipeline.py
 
 EXPOSE 80
 

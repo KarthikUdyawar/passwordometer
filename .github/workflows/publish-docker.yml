@@ -47,33 +47,53 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build the Docker image
-        # run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
-        run: docker build . --file Dockerfile --env KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }} KAGGLE_KEY=${{ secrets.KAGGLE_KEY }} MONGODB_CONN_STRING=${{ secrets.MONGODB_CONN_STRING }} --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} --port 80:80
-        env:
-          IMAGE_NAME: passwordometer-api
-          TAG: 1.0.1
-          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
-          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
-          MONGODB_CONN_STRING: ${{ secrets.MONGODB_CONN_STRING }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      - name: Docker Push
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
-        env:
-          IMAGE_NAME: passwordometer-api
-          TAG: 1.0.1
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/passwordometer-api:1.0.1
+          secrets: |
+            "KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }}"
+            "KAGGLE_KEY=${{ secrets.KAGGLE_KEY }}"
+            "MONGODB_CONN_STRING=${{ secrets.MONGODB_CONN_STRING }}"
 
-      - name: Login in Github
-        run: |
-          echo ${{ secrets.API_GITHUB_TOKEN }} | docker login ghcr.io -u ${{ secrets.API_GITHUB_TOKEN }} --password-stdin
-        env:
-          IMAGE_NAME: passwordometer-api
 
-      - name: Build the Docker image in Github package
-        run: |
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
-        env:
-          IMAGE_NAME: passwordometer-api
+      #? ---------------------------------------------------------------------------
+
+      # - name: Build the Docker image
+      #   # run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+      #   run: docker build . --file Dockerfile --env KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }} KAGGLE_KEY=${{ secrets.KAGGLE_KEY }} MONGODB_CONN_STRING=${{ secrets.MONGODB_CONN_STRING }} --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} --port 80:80
+      #   env:
+      #     IMAGE_NAME: passwordometer-api
+      #     TAG: 1.0.1
+      #     KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      #     KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      #     MONGODB_CONN_STRING: ${{ secrets.MONGODB_CONN_STRING }}
+
+      # - name: Docker Push
+      #   run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+      #   env:
+      #     IMAGE_NAME: passwordometer-api
+      #     TAG: 1.0.1
+
+      #? ---------------------------------------------------------------------------
+
+      # - name: Login in Github
+      #   run: |
+      #     echo ${{ secrets.API_GITHUB_TOKEN }} | docker login ghcr.io -u ${{ secrets.API_GITHUB_TOKEN }} --password-stdin
+      #   env:
+      #     IMAGE_NAME: passwordometer-api
+
+      # - name: Build the Docker image in Github package
+      #   run: |
+      #     docker tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+      #   env:
+      #     IMAGE_NAME: passwordometer-api
 
       # - name: Push the Docker image in Github package
       #   run: |
