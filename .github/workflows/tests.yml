@@ -23,7 +23,7 @@ jobs:
           mongodb-port: 27017
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r dev-requirements.txt
 
       - name: Build package
         run: pip install -e .
@@ -32,7 +32,10 @@ jobs:
         env:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+          MONGODB_CONN_STRING: ${{ secrets.MONGODB_CONN_STRING }}
         run: python src/utils/generate_kaggle_keys.py
 
       - name: Run tests
+        env:
+          MONGODB_CONN_STRING: ${{ secrets.MONGODB_CONN_STRING }}
         run: pytest src/test

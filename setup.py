@@ -45,7 +45,7 @@ def get_long_description(file_path: str = "README.md") -> str:
 
 setup(
     name="Passwordometer",
-    version="0.17.1",
+    version="1.0.0",
     author="Karthik Udyawar",
     author_email="karthikajitudy@gmail.com",
     license="MIT",
