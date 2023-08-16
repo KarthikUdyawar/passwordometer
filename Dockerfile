@@ -32,10 +32,6 @@ RUN --mount=type=secret,id=KAGGLE_USERNAME \
     export MONGODB_CONN_STRING=$(cat /run/secrets/MONGODB_CONN_STRING) && \
     python src/utils/build_pipeline.py
 
-# RUN python src/utils/generate_kaggle_keys.py
-
-# RUN python src/utils/build_pipeline.py
-
 EXPOSE 80
 
 CMD ["uvicorn", "src.api.app:app", "--workers", "4", "--host", "0.0.0.0", "--port", "80"]
