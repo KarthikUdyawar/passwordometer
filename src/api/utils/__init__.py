@@ -1,6 +1,8 @@
 """Utility module for password strength calculation and related calculations."""
 import math
 import secrets
+from typing import Any
+
 from src.interface.config import CustomData
 from src.pipe.pipeline import Pipeline
 
@@ -28,7 +30,7 @@ def generate_password(length: int) -> str:
     return "".join(secrets.choice(CHARS_SET) for _ in range(length))
 
 
-def calc_strength(password: str) -> float:
+def calc_strength(password: str) -> float | Any:
     """Calculate the strength of a given password.
 
     Args:
@@ -124,25 +126,22 @@ def display_time(seconds: float) -> str:
     Returns:
         str: The human-readable time representation.
     """
-    time_string = "instant"
-    if seconds >= 1 and seconds < SECONDS_IN_MINUTE:
-        time_string = f"{seconds} seconds"
-    if seconds < SECONDS_IN_HOUR:
-        time_string = (
-            f"{str(1 + math.ceil(seconds / SECONDS_IN_MINUTE))} minutes"
-        )
-    if seconds < SECONDS_IN_DAY:
-        time_string = f"{str(1 + math.ceil(seconds / SECONDS_IN_HOUR))} hours"
-    if seconds < SECONDS_IN_MONTH:
-        time_string = f"{str(1 + math.ceil(seconds / SECONDS_IN_DAY))} days"
-    if seconds < SECONDS_IN_YEAR:
-        time_string = (
-            f"{str(1 + math.ceil(seconds / SECONDS_IN_MONTH))} months"
-        )
-    if seconds < SECONDS_IN_CENTURY:
-        time_string = f"{str(1 + math.ceil(seconds / SECONDS_IN_YEAR))} years"
-    else:
-        time_string = (
-            f"{str(1 + math.ceil(seconds / SECONDS_IN_CENTURY))} centuries"
-        )
-    return time_string
+    return (
+        "instant"
+        if seconds < 1
+        else f"{seconds:.2f} seconds"
+        if seconds < SECONDS_IN_MINUTE
+        else f"{1 + math.ceil(seconds / SECONDS_IN_MINUTE):.2f} minutes"
+        if seconds < SECONDS_IN_HOUR
+        else f"{1 + math.ceil(seconds / SECONDS_IN_HOUR):.2f} hours"
+        if seconds < SECONDS_IN_DAY
+        else f"{1 + math.ceil(seconds / SECONDS_IN_DAY):.2f} days"
+        if seconds < SECONDS_IN_MONTH
+        else f"{1 + math.ceil(seconds / SECONDS_IN_MONTH):.2f} months"
+        if seconds < SECONDS_IN_YEAR
+        else f"{1 + math.ceil(seconds / SECONDS_IN_YEAR):.2f} years"
+        if seconds < SECONDS_IN_CENTURY
+        else f"{1 + math.ceil(seconds / SECONDS_IN_CENTURY):.2f} centuries"
+        if seconds < 1_00_00_000 * SECONDS_IN_CENTURY
+        else "Eternity"
+    )

@@ -6,23 +6,21 @@ import sys
 from fastapi import HTTPException
 
 from src.api.schema import (
-    PredictionRequest,
-    PredictionResponse,
     GenerateRequest,
     GenerateResponse,
+    PredictionRequest,
+    PredictionResponse,
 )
 from src.api.utils import (
-    generate_password,
     calc_class_strength,
     calc_entropy,
     calc_strength,
     display_time,
     entropy_to_crack_time,
+    generate_password,
 )
-
 from src.middleware.exception import CustomException
 from src.middleware.logger import logger
-
 from src.utils.data_validation import is_valid_password
 
 

@@ -3,15 +3,12 @@ on a given password."""
 
 from fastapi import APIRouter
 
-from src.api.components import (
-    password_strength_component,
-    generate_strong_password,
-)
+from src.api.components import generate_strong_password, password_strength_component
 from src.api.schema import (
-    PredictionRequest,
-    PredictionResponse,
     GenerateRequest,
     GenerateResponse,
+    PredictionRequest,
+    PredictionResponse,
 )
 
 router = APIRouter()
