@@ -14,33 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # - name: Set up Python
-      #   uses: actions/setup-python@v4
-      #   with:
-      #     python-version: "3.10"
-
-      # - name: Start MongoDB
-      #   uses: supercharge/mongodb-github-action@1.8.0
-      #   with:
-      #     mongodb-version: 5.0.5
-      #     mongodb-replica-set: test-rs
-      #     mongodb-port: 27017
-
-      # - name: Install dependencies
-      #   run: pip install -r requirements.txt
-
-      # - name: Build package
-      #   run: pip install -e .
-
-      # - name: Generate kaggle.json
-      #   env:
-      #     KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
-      #     KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
-      #   run: python src/utils/generate_kaggle_keys.py
-
-      # - name: Build pipeline
-      #   run: python src/utils/build_pipeline.py
-
       - name: DockerHub Login
         uses: docker/login-action@v2.1.0
         with:
@@ -56,29 +29,11 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/passwordometer-api:1.0.1
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/passwordometer-api:1.1.0
           secrets: |
             "KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }}"
             "KAGGLE_KEY=${{ secrets.KAGGLE_KEY }}"
             "MONGODB_CONN_STRING=${{ secrets.MONGODB_CONN_STRING }}"
-
-      #? ---------------------------------------------------------------------------
-
-      # - name: Build the Docker image
-      #   # run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
-      #   run: docker build . --file Dockerfile --env KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }} KAGGLE_KEY=${{ secrets.KAGGLE_KEY }} MONGODB_CONN_STRING=${{ secrets.MONGODB_CONN_STRING }} --tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} --port 80:80
-      #   env:
-      #     IMAGE_NAME: passwordometer-api
-      #     TAG: 1.0.1
-      #     KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
-      #     KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
-      #     MONGODB_CONN_STRING: ${{ secrets.MONGODB_CONN_STRING }}
-
-      # - name: Docker Push
-      #   run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
-      #   env:
-      #     IMAGE_NAME: passwordometer-api
-      #     TAG: 1.0.1
 
       #? ---------------------------------------------------------------------------
 
