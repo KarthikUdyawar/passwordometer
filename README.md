@@ -211,7 +211,7 @@ This code snippet demonstrates the basic usage of the project. It creates an ins
 
 Make sure to customize the code according to your specific requirements, such as modifying the input prompts or handling exceptions.
 
-_For more examples, please refer to the [Documentation](https://github.com/KarthikUdyawar/Passwordometer/blob/release-0.17/notebooks/README.md)_
+_For more examples, please refer to the [Code](https://github.com/KarthikUdyawar/passwordometer/blob/release-1.2/example/basic.py)_
 
 ### API Usage
 
