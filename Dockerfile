@@ -26,9 +26,16 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install .
 
 # Use secret mounts to access sensitive data (KAGGLE_USERNAME, KAGGLE_KEY, MONGODB_CONN_STRING) & run build_model
-RUN --mount=type=secret,id=KAGGLE_USERNAME \
-    --mount=type=secret,id=KAGGLE_KEY \
-    --mount=type=secret,id=MONGODB_CONN_STRING \
+# RUN --mount=type=secret,id=KAGGLE_USERNAME \
+#     --mount=type=secret,id=KAGGLE_KEY \
+#     --mount=type=secret,id=MONGODB_CONN_STRING \
+#     export KAGGLE_USERNAME=$(cat /run/secrets/KAGGLE_USERNAME) && \
+#     export KAGGLE_KEY=$(cat /run/secrets/KAGGLE_KEY) && \
+#     export MONGODB_CONN_STRING=$(cat /run/secrets/MONGODB_CONN_STRING) && \
+#     python src/utils/build_model.py --train
+RUN --mount=type=secret,id=KAGGLE_USERNAME,target=/run/secrets/KAGGLE_USERNAME \
+    --mount=type=secret,id=KAGGLE_KEY,target=/run/secrets/KAGGLE_KEY \
+    --mount=type=secret,id=MONGODB_CONN_STRING,target=/run/secrets/MONGODB_CONN_STRING \
     export KAGGLE_USERNAME=$(cat /run/secrets/KAGGLE_USERNAME) && \
     export KAGGLE_KEY=$(cat /run/secrets/KAGGLE_KEY) && \
     export MONGODB_CONN_STRING=$(cat /run/secrets/MONGODB_CONN_STRING) && \
