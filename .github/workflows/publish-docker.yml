@@ -35,20 +35,35 @@ jobs:
             "KAGGLE_KEY=${{ secrets.KAGGLE_KEY }}"
             "MONGODB_CONN_STRING=${{ secrets.MONGODB_CONN_STRING }}"
 
-      - name: Login in Github
-        run: |
-          echo ${{ secrets.API_GITHUB_TOKEN }} | docker login ghcr.io -u ${{ secrets.API_GITHUB_TOKEN }} --password-stdin
-        env:
-          IMAGE_NAME: passwordometer-api
+      # - name: Login in Github
+      #   run: |
+      #     echo ${{ secrets.API_GITHUB_TOKEN }} | docker login ghcr.io -u ${{ secrets.API_GITHUB_TOKEN }} --password-stdin
+      #   env:
+      #     IMAGE_NAME: passwordometer-api
 
-      - name: Build the Docker image in Github package
-        run: |
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:1.2.0 ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:1.2.0
-        env:
-          IMAGE_NAME: passwordometer-api
+      # - name: Build the Docker image in Github package
+      #   run: |
+      #     docker tag ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:1.2.0 ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:1.2.0
+      #   env:
+      #     IMAGE_NAME: passwordometer-api
 
-      - name: Push the Docker image in Github package
+      # - name: Push the Docker image in Github package
+      #   run: |
+      #     docker push ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:1.2.0
+      #   env:
+      #     IMAGE_NAME: passwordometer-api
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.API_GITHUB_TOKEN }}
+
+      - name: Build & Push the Docker image in Github package
         run: |
+          docker build . --tag ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:1.2.0
+          docker run ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:1.2.0
           docker push ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:1.2.0
         env:
           IMAGE_NAME: passwordometer-api
