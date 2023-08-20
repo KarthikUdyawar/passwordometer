@@ -1,6 +1,6 @@
 # Passwordometer
 
-<div style="text-align: center;">
+<div align="center">
 
 [![Python](https://img.shields.io/badge/Python-3.10-blue)](https://www.python.org/downloads/release/python-31012/)
 [![Jupyter Notebook](https://img.shields.io/badge/Jupyter%20Notebook-6.5-orange)](https://jupyter.org/install)
