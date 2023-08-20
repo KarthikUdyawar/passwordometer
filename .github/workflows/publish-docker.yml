@@ -29,7 +29,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/passwordometer-api:1.1.0
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/passwordometer-api:1.2.0
           secrets: |
             "KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }}"
             "KAGGLE_KEY=${{ secrets.KAGGLE_KEY }}"
