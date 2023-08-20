@@ -28,4 +28,4 @@ print(df.info())
 print(df.describe())
 
 # Save the DataFrame to a CSV file
-df.to_csv("example/dataset.csv", index=False)
+df.to_csv("example/data/dataset.csv", index=False)
