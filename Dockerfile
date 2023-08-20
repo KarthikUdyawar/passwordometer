@@ -34,8 +34,6 @@ RUN --mount=type=secret,id=KAGGLE_USERNAME \
     export MONGODB_CONN_STRING=$(cat /run/secrets/MONGODB_CONN_STRING) && \
     python src/utils/build_model.py --train
 
-# RUN python src/utils/build_model.py --train
-
 # Expose port 8000 for the FastAPI application
 EXPOSE 8000
 
