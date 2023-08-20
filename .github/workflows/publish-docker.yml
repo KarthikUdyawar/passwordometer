@@ -44,7 +44,11 @@ jobs:
 
       - name: Build & Push the Docker image in Github package
         run: |
-          docker build . --tag ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:1.2.0 -e KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }} KAGGLE_KEY=${{ secrets.KAGGLE_KEY }} MONGODB_CONN_STRING=${{ secrets.MONGODB_CONN_STRING }}
+          docker build . --tag ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:1.2.0 \
+          -e KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }} \
+          -e KAGGLE_KEY=${{ secrets.KAGGLE_KEY }} \
+          -e MONGODB_CONN_STRING=${{ secrets.MONGODB_CONN_STRING }}
+
           docker push ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:1.2.0
         env:
           IMAGE_NAME: passwordometer-api
