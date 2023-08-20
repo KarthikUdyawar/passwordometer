@@ -165,6 +165,7 @@ logs/
 notebooks/
 src/test/
 imgs/
+example/
 
 kaggle.json
 
@@ -172,4 +173,3 @@ kaggle.json
 .github
 .pre-commit-config.yaml
 .gitignore
-sample.emv
