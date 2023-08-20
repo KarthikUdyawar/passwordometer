@@ -14,7 +14,7 @@ RUN pip install --upgrade pip
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install -e .
+RUN pip install .
 
 # RUN --mount=type=secret,id=KAGGLE_USERNAME \
 #     --mount=type=secret,id=KAGGLE_KEY \
@@ -39,6 +39,8 @@ RUN --mount=type=secret,id=KAGGLE_USERNAME \
     export KAGGLE_KEY=$(cat /run/secrets/KAGGLE_KEY) && \
     export MONGODB_CONN_STRING=$(cat /run/secrets/MONGODB_CONN_STRING) && \
     python src/utils/build_model.py --train
+
+# RUN python src/utils/build_model.py --train
 
 EXPOSE 8000
 
