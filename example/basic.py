@@ -1,7 +1,7 @@
 """Interactive program to calculate password strength using a pipeline."""
 
-from src.pipe.pipeline import Pipeline
 from src.interface.config import CustomData
+from src.pipe.pipeline import Pipeline
 
 
 def main():
