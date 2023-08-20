@@ -125,34 +125,53 @@ Follow the steps below to install and set up the project:
 
 2. **Clone the repository:**
 
+   Clone the project repository using the following command:
+
    ```bash
    git clone https://github.com/KarthikUdyawar/Passwordometer.git
    ```
 
-3. **Install the required dependencies**
+3. **Create a virtual environment and activate it:**
 
-   By navigating to the project directory and running the following command:
+   To isolate project dependencies, create a virtual environment and activate it:
+
+   ```bash
+   python3 -m venv env
+   source env/bin/activate   # On Windows: env\Scripts\activate
+   ```
+
+4. **Install the required dependencies**
+
+   Navigate to the project directory and install the necessary dependencies:
 
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Create .env file**
+5. **Install Passwordometer package**
 
-   Create a file named .env in the project directory and enter your Kaggle API key information in the following format:
+   Install the Passwordometer package using the following command:
 
    ```bash
-   KAGGLE_USERNAME=your_username
-   KAGGLE_KEY=your_api_key
+   pip install .
+   ```
+
+6. **Create .env file**
+
+   Create a .env file in the project directory and provide your Kaggle API key information and MongoDB URL:
+
+   ```bash
+   KAGGLE_USERNAME="your_username"
+   KAGGLE_KEY="your_api_key"
    MONGODB_CONN_STRING = "mongodb://localhost:27017/"
    ```
 
-5. **Generate the Kaggle keys**
+7. **Build and train the model**
 
-   Generate the Kaggle keys file by running the following command:
+   Build and train the model by running the following command:
 
    ```bash
-   python src/utils/generate_kaggle_keys.py
+   python src/utils/build_model.py --train
    ```
 
 ## Usage
@@ -160,28 +179,32 @@ Follow the steps below to install and set up the project:
 You can use the following code snippet as an example to understand how to use the project:
 
 ```python
+"""Interactive program to calculate password strength using a pipeline."""
+
 from src.pipe.pipeline import Pipeline
 from src.interface.config import CustomData
-from src.middleware.exception import CustomException
 
-pipeline = Pipeline()
-custom_data = CustomData()
 
-print("Main menu\n1. Push data\n2. Train pipeline\n3. Predict pipeline\n")
-choice = int(input("Enter the choice: "))
+def main():
+    """Main function for the interactive program."""
+    pipeline = Pipeline()
+    custom_data = CustomData()
 
-if choice == 1:
-    pipeline.push_data()
-elif choice == 2:
-    pipeline.train()
-elif choice == 3:
-    input_data = str(input("Enter the password: "))
-    password = custom_data.data2df(input_data)
-    strength = pipeline.predict(password)
-    value = custom_data.array2data(strength)
-    print(f"\nPassword: {input_data} Strength: {value}")
-else:
-    raise CustomException("Invalid input", sys)
+    while True:
+        data = str(input("Enter the password (or 'exit' to quit): "))
+
+        if data.lower() == "exit":
+            print("Exiting the program.")
+            break
+
+        password = custom_data.data2df(data)
+        strength = pipeline.predict(password)
+        value = custom_data.array2data(strength)
+        print(f"\nPassword: {data} Strength: {value}")
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 This code snippet demonstrates the basic usage of the project. It creates an instance of the `Pipeline` class and interacts with the user through a menu-based system. The user can choose to push data, train the pipeline, or predict the strength of a password.
@@ -199,14 +222,14 @@ The project now includes an API powered by [FastAPI](https://fastapi.tiangolo.co
    Navigate to the project directory and run the following command:
 
    ```bash
-   uvicorn src.api.app:app --host 0.0.0.0 --port 80
+   uvicorn src.api.app:app --host 0.0.0.0 --port 8000
    ```
 
-   This will start the FastAPI server, making the API endpoints accessible at [http://localhost:80](http://localhost:80).
+   This will start the FastAPI server, making the API endpoints accessible at [http://localhost:8000](http://localhost:8000).
 
 2. **Access the API documentation:**
 
-   Open your web browser and go to [http://localhost:80/docs](http://localhost:80/docs) to access the Swagger documentation for the API. Here, you can explore the available endpoints, view request and response schemas, and interact with the API using the built-in interface.
+   Open your web browser and go to [http://localhost:8000/docs](http://localhost:8000/docs) to access the Swagger documentation for the API. Here, you can explore the available endpoints, view request and response schemas, and interact with the API using the built-in interface.
 
 3. **API Endpoints:**
 
@@ -216,7 +239,7 @@ The project now includes an API powered by [FastAPI](https://fastapi.tiangolo.co
 
    These endpoints provide programmatic access to the password strength prediction and password generation functionalities.
 
-   _For more details, please refer to the [API documentation](http://localhost:80/docs)._
+   _For more details, please refer to the [API documentation](http://localhost:8000/docs)._
 
 ## Docker Image
 
@@ -225,10 +248,10 @@ A Docker image for the Passwordometer API is available on Docker Hub. You can pu
 ```bash
 docker pull kstar123/passwordometer-api
 
-docker run -d -p 80:80 --name passwordometer-api kstar123/passwordometer-api
+docker run -d -p 8000:8000 --name passwordometer-api kstar123/passwordometer-api
 ```
 
-This will start the FastAPI server inside a Docker container, and you can access the API endpoints at [http://localhost:80](http://localhost:80).
+This will start the FastAPI server inside a Docker container, and you can access the API endpoints at [http://localhost:8000](http://localhost:8000).
 
 _For more details on using Docker, refer to the [Docker documentation](https://docs.docker.com/)._
 
