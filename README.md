@@ -1,6 +1,6 @@
 # Passwordometer
 
-<div style="text-align: center;">
+<div align="center">
 
 [![Python](https://img.shields.io/badge/Python-3.10-blue)](https://www.python.org/downloads/release/python-31012/)
 [![Jupyter Notebook](https://img.shields.io/badge/Jupyter%20Notebook-6.5-orange)](https://jupyter.org/install)
@@ -211,7 +211,7 @@ This code snippet demonstrates the basic usage of the project. It creates an ins
 
 Make sure to customize the code according to your specific requirements, such as modifying the input prompts or handling exceptions.
 
-_For more examples, please refer to the [Documentation](https://github.com/KarthikUdyawar/Passwordometer/blob/release-0.17/notebooks/README.md)_
+_For more examples, please refer to the [Code](https://github.com/KarthikUdyawar/passwordometer/blob/release-1.2/example/basic.py)_
 
 ### API Usage
 
@@ -243,7 +243,7 @@ The project now includes an API powered by [FastAPI](https://fastapi.tiangolo.co
 
 ## Docker Image
 
-A Docker image for the Passwordometer API is available on Docker Hub. You can pull and run the image using the following command:
+A Docker image for the Passwordometer API is available on [Docker Hub](https://hub.docker.com/repository/docker/kstar123/passwordometer-api/general). You can pull and run the image using the following command:
 
 ```bash
 docker pull kstar123/passwordometer-api
@@ -300,6 +300,7 @@ If you have any questions, suggestions, or feedback about Passwordometer, feel f
 
 - **Project Author:** [Karthik Udyawar](mailto:karthikajitudy@gmail.com)
 - **GitHub Repo:** [Passwordometer](https://github.com/KarthikUdyawar/Passwordometer)
+- **Kaggle:** [Karthik Udyawar](https://www.kaggle.com/karthikudyawar)
 
 We are open to collaboration and appreciate any contributions to the project. If you encounter any issues or have ideas for enhancements, please don't hesitate to create an issue or pull request on the GitHub repository.
 
