@@ -243,7 +243,7 @@ The project now includes an API powered by [FastAPI](https://fastapi.tiangolo.co
 
 ## Docker Image
 
-A Docker image for the Passwordometer API is available on Docker Hub. You can pull and run the image using the following command:
+A Docker image for the Passwordometer API is available on [Docker Hub](https://hub.docker.com/repository/docker/kstar123/passwordometer-api/general). You can pull and run the image using the following command:
 
 ```bash
 docker pull kstar123/passwordometer-api
@@ -300,6 +300,7 @@ If you have any questions, suggestions, or feedback about Passwordometer, feel f
 
 - **Project Author:** [Karthik Udyawar](mailto:karthikajitudy@gmail.com)
 - **GitHub Repo:** [Passwordometer](https://github.com/KarthikUdyawar/Passwordometer)
+- **Kaggle:** [Karthik Udyawar](https://www.kaggle.com/karthikudyawar)
 
 We are open to collaboration and appreciate any contributions to the project. If you encounter any issues or have ideas for enhancements, please don't hesitate to create an issue or pull request on the GitHub repository.
 
